@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Laverage AI helps teams turn practical AI ideas into dependable business systems."
+    />
+    <title>Laverage AI | Practical AI, built for work</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #07120f;
+        color: #f4f7f5;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background: #07120f;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 84px;
+        border-bottom: 1px solid #1c332c;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 750;
+        letter-spacing: -0.03em;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border-radius: 10px;
+        background: #99f6c2;
+        color: #07120f;
+        font-size: 14px;
+        letter-spacing: -0.08em;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: #b8c8c1;
+        font-size: 14px;
+      }
+
+      nav a {
+        text-decoration: none;
+      }
+
+      nav a:hover,
+      nav a:focus-visible {
+        color: #ffffff;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(310px, 0.75fr);
+        gap: 76px;
+        align-items: center;
+        min-height: 620px;
+        padding: 72px 0;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin: 0 0 22px;
+        color: #99f6c2;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #99f6c2;
+        content: "";
+        box-shadow: 0 0 0 5px #163d2d;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(48px, 7vw, 88px);
+        line-height: 0.98;
+        letter-spacing: -0.065em;
+      }
+
+      .intro {
+        max-width: 620px;
+        margin: 28px 0 0;
+        color: #b8c8c1;
+        font-size: clamp(18px, 2vw, 21px);
+        line-height: 1.65;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 50px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 22px;
+        border: 1px solid #29483d;
+        border-radius: 10px;
+        color: #f4f7f5;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        border-color: #99f6c2;
+        background: #99f6c2;
+        color: #07120f;
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        border-color: #d7ffe8;
+      }
+
+      .signal-card {
+        padding: 28px;
+        border: 1px solid #29483d;
+        border-radius: 20px;
+        background: #0c1b16;
+        box-shadow: 0 24px 80px rgb(0 0 0 / 24%);
+      }
+
+      .signal-card h2 {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .signal-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .signal {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 14px;
+        align-items: center;
+        padding: 16px;
+        border-radius: 12px;
+        background: #10241c;
+      }
+
+      .signal-number {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border: 1px solid #386452;
+        border-radius: 10px;
+        color: #99f6c2;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .signal strong,
+      .signal span {
+        display: block;
+      }
+
+      .signal strong {
+        margin-bottom: 4px;
+        font-size: 15px;
+      }
+
+      .signal span {
+        color: #94a79f;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .services {
+        padding: 72px 0 92px;
+        border-top: 1px solid #1c332c;
+      }
+
+      .section-label {
+        margin: 0 0 28px;
+        color: #94a79f;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .service {
+        min-height: 190px;
+        padding: 25px;
+        border: 1px solid #1c332c;
+        border-radius: 16px;
+      }
+
+      .service h3 {
+        margin: 42px 0 10px;
+        font-size: 19px;
+      }
+
+      .service p {
+        margin: 0;
+        color: #94a79f;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 28px 0 36px;
+        border-top: 1px solid #1c332c;
+        color: #71857c;
+        font-size: 13px;
+      }
+
+      @media (max-width: 840px) {
+        nav a:not(.button) {
+          display: none;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 48px;
+          padding: 64px 0;
+        }
+
+        .service-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .service {
+          min-height: 0;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .shell {
+          width: min(100% - 28px, 1180px);
+        }
+
+        header {
+          min-height: 72px;
+        }
+
+        nav .button {
+          min-height: 42px;
+          padding: 0 14px;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 52px 0 64px;
+        }
+
+        .signal-card {
+          padding: 18px;
+        }
+
+        footer {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <a class="brand" href="/" aria-label="Laverage AI home">
+          <span class="brand-mark" aria-hidden="true">LA</span>
+          <span>Laverage AI</span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#services">Capabilities</a>
+          <a href="#approach">Approach</a>
+          <a class="button" href="mailto:hello@laverage.ai">Start a project</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">AI that earns its place</p>
+            <h1>Turn ambition into working intelligence.</h1>
+            <p class="intro">
+              We design and ship focused AI systems that remove busywork, sharpen decisions,
+              and create measurable advantage for your team.
+            </p>
+            <div class="actions">
+              <a class="button primary" href="mailto:hello@laverage.ai">Build with us</a>
+              <a class="button" href="#services">Explore capabilities</a>
+            </div>
+          </div>
+
+          <aside class="signal-card" id="approach" aria-label="Our delivery approach">
+            <h2>From idea to impact</h2>
+            <div class="signal-list">
+              <div class="signal">
+                <span class="signal-number">01</span>
+                <div><strong>Find the leverage</strong><span>Prioritize the use case with the clearest value.</span></div>
+              </div>
+              <div class="signal">
+                <span class="signal-number">02</span>
+                <div><strong>Prove it quickly</strong><span>Test with real workflows, data, and users.</span></div>
+              </div>
+              <div class="signal">
+                <span class="signal-number">03</span>
+                <div><strong>Build for trust</strong><span>Ship a dependable system your team can own.</span></div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="services" id="services">
+          <p class="section-label">Where we create leverage</p>
+          <div class="service-grid">
+            <article class="service">
+              <h3>AI workflow design</h3>
+              <p>Map repetitive work and redesign it around automation, agents, and human judgment.</p>
+            </article>
+            <article class="service">
+              <h3>Custom AI products</h3>
+              <p>Build focused tools that connect your data, models, and operational systems.</p>
+            </article>
+            <article class="service">
+              <h3>Adoption and enablement</h3>
+              <p>Give teams the practical systems, standards, and confidence to work with AI.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>© 2026 Laverage AI</span>
+        <span>Practical intelligence. Measurable progress.</span>
+      </footer>
+    </div>
+  </body>
+</html>
