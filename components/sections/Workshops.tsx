@@ -1,0 +1,48 @@
+import { Reveal } from "@/components/animations/Reveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { workshops } from "@/lib/content";
+
+export function Workshops() {
+  return (
+    <section id="workshops" className="shell scroll-mt-28 py-section-sm sm:py-section">
+      <SectionHeading
+        eyebrow="Workshops delivered"
+        title={
+          <>
+            Built for people who are <span className="text-white/45">new to AI.</span>
+          </>
+        }
+        description="Every session starts from the work your team already does. These are examples of teams we have already helped."
+      />
+
+      <div className="mt-16 grid gap-5 lg:grid-cols-2">
+        {workshops.map((workshop, i) => (
+          <Reveal
+            key={workshop.title}
+            as="article"
+            delay={i * 0.1}
+            className="flex h-full flex-col rounded-2xl border border-line bg-card p-8 transition duration-300 hover:-translate-y-1 hover:border-line-strong sm:p-10"
+          >
+            <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
+              {workshop.audience}
+            </p>
+            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
+              {workshop.title}
+            </h3>
+            <p className="mt-4 text-base leading-relaxed text-muted">{workshop.description}</p>
+            <ul className="mt-8 flex flex-wrap gap-2">
+              {workshop.topics.map((topic) => (
+                <li
+                  key={topic}
+                  className="rounded-full border border-line px-3.5 py-1.5 text-xs text-muted"
+                >
+                  {topic}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
