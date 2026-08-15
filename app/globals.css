@@ -110,6 +110,11 @@
   animation: marquee 34s linear infinite;
 }
 
+/* Keep the Calendly iframe from painting an opaque white canvas on this dark page. */
+.calendly-inline-widget iframe {
+  color-scheme: light;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

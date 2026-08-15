@@ -1,12 +1,10 @@
-import { ArrowUpRight } from "lucide-react";
-
 import { Reveal } from "@/components/animations/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 
 const proofPoints = [
   ["Practical", "Built around your real workflows"],
-  ["Human-first", "Designed for non-technical teams"],
-  ["Tool-agnostic", "Claude, ChatGPT and your stack"],
+  ["Human first", "Designed for teams without a technical background"],
+  ["Tool agnostic", "Claude, ChatGPT and your stack"],
 ];
 
 export function Hero() {
@@ -32,16 +30,15 @@ export function Hero() {
           </h1>
 
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-            Practical AI implementation, training and workshops for non-technical teams.
+            Practical AI implementation, training and workshops for teams without a technical background.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <ButtonLink href="#contact" className="w-full sm:w-auto">
-              Book a Workshop
-              <ArrowUpRight size={16} />
+            <ButtonLink href="#calendar" className="w-full sm:w-auto">
+              Book a Free Discovery Call
             </ButtonLink>
-            <ButtonLink href="#services" variant="secondary" className="w-full sm:w-auto">
-              Learn More
+            <ButtonLink href="#contact" variant="secondary" className="w-full sm:w-auto">
+              Contact Us
             </ButtonLink>
           </div>
         </Reveal>

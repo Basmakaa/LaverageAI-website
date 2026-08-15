@@ -30,13 +30,13 @@ export const services: Service[] = [
     icon: GraduationCap,
     title: "AI Workshops",
     description:
-      "Hands-on sessions built around your team's real tasks — not generic prompting theory or tool demos.",
+      "Hands on sessions built around your team's real tasks, not generic prompting theory or tool demos.",
   },
   {
     icon: BookOpen,
     title: "Claude & ChatGPT Training",
     description:
-      "Role-specific training that takes people from occasional use to confident, everyday practice.",
+      "Role specific training that takes people from occasional use to confident, everyday practice.",
   },
   {
     icon: Workflow,
@@ -103,7 +103,7 @@ export const processSteps: ProcessStep[] = [
     step: "04",
     title: "Enable",
     description:
-      "We train the team until AI becomes part of everyday work — not a tool people forget after the workshop.",
+      "We train the team until AI becomes part of everyday work, not a tool people forget after the workshop.",
   },
 ];
 
@@ -112,14 +112,14 @@ export const workshops: Workshop[] = [
     audience: "Women in Business",
     title: "AI for Marketing & Content Creation",
     description:
-      "A practical session on using AI to plan, draft and repurpose marketing content, built for a community of non-technical business owners.",
+      "A practical session on using AI to plan, draft and repurpose marketing content, built for a community of business owners without a technical background.",
     topics: ["Content ideation", "Repurposing", "Brand voice", "Responsible use"],
   },
   {
     audience: "HR Team",
     title: "Claude for Small Businesses",
     description:
-      "Everyday Claude workflows for a small HR team — drafting, summarising, organising information and improving quality without technical complexity.",
+      "Everyday Claude workflows for a small HR team: drafting, summarising, organising information and improving quality without technical complexity.",
     topics: ["Drafting", "Summarising", "Policy review", "Data handling"],
   },
 ];
@@ -128,7 +128,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Do you teach beginners?",
     answer:
-      "Yes — beginners are who we are built for. Most of the teams we work with have never used AI beyond a few experiments. We start from where your team actually is and focus on the work they already do, so nothing feels abstract or technical.",
+      "Yes. Beginners are who we are built for. Most of the teams we work with have never used AI beyond a few experiments. We start from where your team actually is and focus on the work they already do, so nothing feels abstract or technical.",
   },
   {
     question: "Do we need ChatGPT Plus?",
@@ -138,7 +138,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Can you train our whole company?",
     answer:
-      "Yes. We run everything from single-team workshops to company-wide enablement programmes delivered department by department. Larger rollouts usually combine a shared foundation session with role-specific training for marketing, HR, operations and leadership.",
+      "Yes. We run everything from single team workshops to company wide enablement programmes delivered department by department. Larger rollouts usually combine a shared foundation session with role specific training for marketing, HR, operations and leadership.",
   },
   {
     question: "Do you build custom AI tools?",

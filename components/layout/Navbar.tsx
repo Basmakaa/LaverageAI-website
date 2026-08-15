@@ -43,8 +43,8 @@ export function Navbar() {
         {/* Wrapper carries the responsive display: ButtonLink's own `inline-flex`
             is emitted after `.hidden`, so `hidden` on the button itself loses. */}
         <div className="hidden lg:block">
-          <ButtonLink href="#contact" className="px-5 py-2.5">
-            Book a Workshop
+          <ButtonLink href="#calendar" className="px-5 py-2.5">
+            Book a Free Discovery Call
           </ButtonLink>
         </div>
 
@@ -81,8 +81,8 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <ButtonLink href="#contact" onClick={() => setOpen(false)} className="mt-2 w-full">
-                Book a Workshop
+              <ButtonLink href="#calendar" onClick={() => setOpen(false)} className="mt-2 w-full">
+                Book a Free Discovery Call
               </ButtonLink>
             </nav>
           </motion.div>

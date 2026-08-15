@@ -8,4 +8,6 @@ export const site = {
   email: "hello@laverageai.com",
   linkedin: "https://www.linkedin.com/company/laverageai",
   founder: "Basma Kaanane",
+  /** Calendly booking page for free discovery calls. */
+  calendar: "https://calendly.com/hi-laverageai/discovery-call",
 } as const;

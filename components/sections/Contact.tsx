@@ -1,3 +1,4 @@
+import { CalendlyEmbed } from "@/components/sections/CalendlyEmbed";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Reveal } from "@/components/animations/Reveal";
 import { site } from "@/lib/site";
@@ -56,6 +57,23 @@ export function Contact() {
         <Reveal delay={0.1}>
           <ContactForm />
         </Reveal>
+      </div>
+
+      <div id="calendar" className="shell relative mt-16 scroll-mt-28 sm:mt-20">
+        <Reveal>
+          <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
+            Book a time
+          </p>
+          <h3 className="mt-4 text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+            Or pick a slot for a free discovery call
+          </h3>
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-muted">
+            Choose a time that works. The calendar is on this page, so there is no need to leave the site.
+          </p>
+        </Reveal>
+        <div className="mt-8">
+          <CalendlyEmbed />
+        </div>
       </div>
     </section>
   );

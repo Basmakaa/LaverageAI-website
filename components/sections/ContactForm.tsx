@@ -23,7 +23,7 @@ export function ContactForm() {
     const company = String(data.get("company") ?? "");
     const message = String(data.get("message") ?? "");
 
-    const subject = encodeURIComponent(`Workshop enquiry — ${company || name}`);
+    const subject = encodeURIComponent(`Workshop enquiry: ${company || name}`);
     const body = encodeURIComponent(
       `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\n${message}`,
     );
@@ -95,7 +95,7 @@ export function ContactForm() {
       </div>
 
       <Button type="submit" className="w-full sm:w-max">
-        Book a Workshop
+        Send Message
         <ArrowUpRight size={16} />
       </Button>
 

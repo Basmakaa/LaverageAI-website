@@ -23,8 +23,15 @@ export function Statement() {
           The LaverageAI principle
         </p>
         <p className="mx-auto mt-8 max-w-4xl text-3xl leading-[1.08] font-semibold tracking-[-0.04em] text-balance sm:text-5xl lg:text-6xl">
-          AI should feel less like another technology project and more like{" "}
-          <span className="text-white/45">a better way to work.</span>
+          Technology is at its best when it is{" "}
+          <span className="text-white/45">invisible.</span>
+        </p>
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
+          AI should integrate naturally into how your team already works, subtracting
+          complexity rather than adding another layer of it.
+        </p>
+        <p className="mt-8 text-sm font-semibold tracking-[0.14em] text-fg uppercase">
+          Less friction. Better workflows. More impact.
         </p>
       </Reveal>
     </section>

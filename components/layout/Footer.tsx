@@ -10,7 +10,7 @@ export function Footer() {
           <div className="max-w-sm">
             <Logo />
             <p className="mt-5 text-sm leading-relaxed text-muted">
-              Practical AI implementation, training and workshops for non-technical teams.
+              Practical AI implementation, training and workshops for teams without a technical background.
             </p>
           </div>
 

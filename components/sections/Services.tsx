@@ -9,7 +9,7 @@ export function Services() {
         eyebrow="What we do"
         title={
           <>
-            From AI interest to <span className="text-white/45">AI-enabled.</span>
+            From AI interest to <span className="text-white/45">AI enabled.</span>
           </>
         }
         description="We combine strategy, training and implementation, so your team does not leave a workshop inspired and then return to the same way of working."

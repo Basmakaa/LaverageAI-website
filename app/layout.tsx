@@ -65,6 +65,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: site.name,
   url: site.url,
+  logo: `${site.url}/logo.png`,
   description: site.description,
   slogan: site.tagline,
   email: site.email,
