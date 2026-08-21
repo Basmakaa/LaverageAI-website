@@ -76,5 +76,5 @@ backend. For real lead capture, replace the `handleSubmit` body in
 
 ## Before going live
 
-- Update `email` and `linkedin` in `lib/site.ts` — these are placeholders.
+- Update `email` in `lib/site.ts` if the contact address changes.
 - Add an Open Graph image at `app/opengraph-image.png` (1200×630); metadata is already wired up.

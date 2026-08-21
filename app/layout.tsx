@@ -69,7 +69,6 @@ const organizationSchema = {
   description: site.description,
   slogan: site.tagline,
   email: site.email,
-  sameAs: [site.linkedin],
   founder: {
     "@type": "Person",
     name: site.founder,

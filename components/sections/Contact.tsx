@@ -25,32 +25,15 @@ export function Contact() {
             start.
           </p>
 
-          <dl className="mt-12 grid gap-6 sm:grid-cols-2">
-            <div>
-              <dt className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-                Email
-              </dt>
-              <dd className="mt-2">
-                <a href={`mailto:${site.email}`} className="text-lg transition-colors hover:text-white/80">
-                  {site.email}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-                LinkedIn
-              </dt>
-              <dd className="mt-2">
-                <a
-                  href={site.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg transition-colors hover:text-white/80"
-                >
-                  {site.name}
-                </a>
-              </dd>
-            </div>
+          <dl className="mt-12">
+            <dt className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
+              Email
+            </dt>
+            <dd className="mt-2">
+              <a href={`mailto:${site.email}`} className="text-lg transition-colors hover:text-white/80">
+                {site.email}
+              </a>
+            </dd>
           </dl>
         </Reveal>
 

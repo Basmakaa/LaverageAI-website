@@ -5,8 +5,7 @@ export const site = {
   description:
     "Helping small businesses confidently adopt AI through workshops, implementation and AI strategy.",
   tagline: "Helping businesses leverage AI with confidence.",
-  email: "hello@laverageai.com",
-  linkedin: "https://www.linkedin.com/company/laverageai",
+  email: "hi@laverageai.com",
   founder: "Basma Kaanane",
   /** Calendly booking page for free discovery calls. */
   calendar: "https://calendly.com/hi-laverageai/discovery-call",

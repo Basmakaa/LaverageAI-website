@@ -28,3 +28,10 @@ export type FaqItem = {
   question: string;
   answer: string;
 };
+
+export type Testimonial = {
+  name: string;
+  title: string;
+  rating: number;
+  quote: string;
+};

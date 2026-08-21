@@ -31,19 +31,9 @@ export function Footer() {
           <span>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </span>
-          <div className="flex gap-6">
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-fg"
-            >
-              LinkedIn
-            </a>
-            <a href={`mailto:${site.email}`} className="transition-colors hover:text-fg">
-              {site.email}
-            </a>
-          </div>
+          <a href={`mailto:${site.email}`} className="transition-colors hover:text-fg">
+            {site.email}
+          </a>
         </div>
       </div>
     </footer>
