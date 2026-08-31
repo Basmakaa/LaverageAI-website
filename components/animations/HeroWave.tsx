@@ -14,7 +14,7 @@ const SEGMENTS = 8;
 const KEYFRAMES = 8;
 const BASE_Y = 195;
 const AMPLITUDE = 70;
-const MIRROR_AXIS = 303;
+const MIRROR_AXIS = 408;
 const OMEGA = (Math.PI * 2) / SPAN;
 
 export const WAVE_DURATION = 24;
@@ -82,9 +82,12 @@ export function HeroWave() {
             <stop offset="86%" stopColor="#fff" stopOpacity="1" />
             <stop offset="100%" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
-          <linearGradient id={fadeDown} x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-            <stop offset="0%" stopColor="#fff" stopOpacity="0.55" />
-            <stop offset="70%" stopColor="#fff" stopOpacity="0" />
+          <linearGradient id={fadeDown} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+            <stop offset="0.5" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.58" stopColor="#fff" stopOpacity="0.35" />
+            <stop offset="0.68" stopColor="#fff" stopOpacity="1" />
+            <stop offset="0.8" stopColor="#fff" stopOpacity="0.35" />
+            <stop offset="0.92" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
           <linearGradient id={bloom} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#fff" stopOpacity="0" />
@@ -112,18 +115,6 @@ export function HeroWave() {
 
         <g mask={`url(#${mask})`}>
           <g mask={`url(#${bloomMask})`}>
-            <g mask={`url(#${reflectionMask})`}>
-              <WavePair
-                paths={REFLECTIONS}
-                reduceMotion={!!reduceMotion}
-                glow={`url(#${glow})`}
-                core={`url(#${core})`}
-                glowWidth={40}
-                glowOpacity={0.1}
-                coreWidth={6}
-                coreOpacity={0.22}
-              />
-            </g>
             <WavePair
               paths={LINES}
               reduceMotion={!!reduceMotion}
@@ -133,6 +124,18 @@ export function HeroWave() {
               glowOpacity={0.14}
               coreWidth={7.5}
               coreOpacity={0.9}
+            />
+          </g>
+          <g mask={`url(#${reflectionMask})`}>
+            <WavePair
+              paths={REFLECTIONS}
+              reduceMotion={!!reduceMotion}
+              glow={`url(#${glow})`}
+              core={`url(#${core})`}
+              glowWidth={36}
+              glowOpacity={0.16}
+              coreWidth={6}
+              coreOpacity={0.42}
             />
           </g>
         </g>
