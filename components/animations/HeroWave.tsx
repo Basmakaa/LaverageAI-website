@@ -11,14 +11,14 @@ import { useId } from "react";
 const START_X = -80;
 const SPAN = 1760;
 const SEGMENTS = 8;
-const KEYFRAMES = 8;
+const KEYFRAMES = 16;
 const BASE_Y = 195;
 const AMPLITUDE = 70;
 const MIRROR_AXIS = 408;
 const OMEGA = (Math.PI * 2) / SPAN;
 
-export const WAVE_DURATION = 24;
-const ease = "easeInOut" as const;
+export const WAVE_DURATION = 26;
+const ease = "linear" as const;
 
 function yAt(x: number, phase: number) {
   return BASE_Y + AMPLITUDE * Math.sin(OMEGA * (x - START_X) + phase);
@@ -66,7 +66,10 @@ export function HeroWave() {
   const bloom = `${id}-bloom`;
   const bloomMask = `${id}-bloom-mask`;
   const glow = `${id}-glow`;
+  const bend = `${id}-bend`;
   const core = `${id}-core`;
+  const reflectionGlow = `${id}-ref-glow`;
+  const reflectionCore = `${id}-ref-core`;
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -106,10 +109,19 @@ export function HeroWave() {
             <rect width="1600" height="900" fill={`url(#${fadeDown})`} />
           </mask>
           <filter id={glow} x="-16%" y="-120%" width="132%" height="340%">
-            <feGaussianBlur stdDeviation="38" />
+            <feGaussianBlur stdDeviation="42" />
+          </filter>
+          <filter id={bend} x="-10%" y="-70%" width="120%" height="240%">
+            <feGaussianBlur stdDeviation="14" />
           </filter>
           <filter id={core} x="-6%" y="-40%" width="112%" height="180%">
-            <feGaussianBlur stdDeviation="5" />
+            <feGaussianBlur stdDeviation="4" />
+          </filter>
+          <filter id={reflectionGlow} x="-18%" y="-140%" width="136%" height="380%">
+            <feGaussianBlur stdDeviation="56" />
+          </filter>
+          <filter id={reflectionCore} x="-10%" y="-80%" width="120%" height="260%">
+            <feGaussianBlur stdDeviation="16" />
           </filter>
         </defs>
 
@@ -119,23 +131,26 @@ export function HeroWave() {
               paths={LINES}
               reduceMotion={!!reduceMotion}
               glow={`url(#${glow})`}
+              bend={`url(#${bend})`}
               core={`url(#${core})`}
-              glowWidth={40}
-              glowOpacity={0.14}
-              coreWidth={7.5}
-              coreOpacity={0.9}
+              glowWidth={56}
+              glowOpacity={0.16}
+              bendWidth={22}
+              bendOpacity={0.38}
+              coreWidth={11}
+              coreOpacity={0.95}
             />
           </g>
           <g mask={`url(#${reflectionMask})`}>
             <WavePair
               paths={REFLECTIONS}
               reduceMotion={!!reduceMotion}
-              glow={`url(#${glow})`}
-              core={`url(#${core})`}
-              glowWidth={36}
-              glowOpacity={0.16}
-              coreWidth={6}
-              coreOpacity={0.42}
+              glow={`url(#${reflectionGlow})`}
+              core={`url(#${reflectionCore})`}
+              glowWidth={48}
+              glowOpacity={0.08}
+              coreWidth={8}
+              coreOpacity={0.16}
             />
           </g>
         </g>
@@ -148,27 +163,37 @@ function WavePair({
   paths,
   reduceMotion,
   glow,
+  bend,
   core,
   glowWidth,
   glowOpacity,
+  bendWidth,
+  bendOpacity,
   coreWidth,
   coreOpacity,
 }: {
   paths: string[];
   reduceMotion: boolean;
   glow: string;
+  bend?: string;
   core: string;
   glowWidth: number;
   glowOpacity: number;
+  bendWidth?: number;
+  bendOpacity?: number;
   coreWidth: number;
   coreOpacity: number;
 }) {
+  const motionProps = {
+    animate: reduceMotion ? undefined : { d: paths },
+    transition: { duration: WAVE_DURATION, ease, repeat: Infinity },
+  };
+
   return (
     <>
       <motion.path
         d={paths[0]}
-        animate={reduceMotion ? undefined : { d: paths }}
-        transition={{ duration: WAVE_DURATION, ease, repeat: Infinity }}
+        {...motionProps}
         fill="none"
         stroke="#ffffff"
         strokeWidth={glowWidth}
@@ -177,10 +202,22 @@ function WavePair({
         strokeOpacity={glowOpacity}
         filter={glow}
       />
+      {bend && bendWidth ? (
+        <motion.path
+          d={paths[0]}
+          {...motionProps}
+          fill="none"
+          stroke="#ffffff"
+          strokeWidth={bendWidth}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={bendOpacity}
+          filter={bend}
+        />
+      ) : null}
       <motion.path
         d={paths[0]}
-        animate={reduceMotion ? undefined : { d: paths }}
-        transition={{ duration: WAVE_DURATION, ease, repeat: Infinity }}
+        {...motionProps}
         fill="none"
         stroke="#ffffff"
         strokeWidth={coreWidth}
