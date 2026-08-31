@@ -16,8 +16,8 @@ export const navLinks: NavLink[] = [
   { label: "Process", href: "#process" },
   { label: "Workshops", href: "#workshops" },
   { label: "Feedback", href: "#feedback" },
-  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export const services: Service[] = [
@@ -111,16 +111,13 @@ export const processSteps: ProcessStep[] = [
 export const workshops: Workshop[] = [
   {
     audience: "Femme in Business",
-    title: "Founders Guide to AI",
+    title: "The Founders Guide to AI",
     description:
-      "Delivered as Founders Guide to AI, this session was built around marketing and content: planning, drafting and repurposing work that founders actually need to ship.",
+      "Delivered as The Founders Guide to AI, this session was built around marketing and content: planning, drafting and repurposing work that founders actually need to ship.",
     topics: ["Marketing", "Content creation", "Brand voice", "Repurposing"],
     logo: "/logos/femme-in-business.png",
     logoAlt: "Femme in Business",
-    logoBox: {
-      padding: "12px",
-      background: "rgba(255,255,255,0.96)",
-    },
+    logoLayout: "full",
   },
   {
     audience: "EINC",
@@ -130,9 +127,10 @@ export const workshops: Workshop[] = [
     topics: ["Drafting", "Summarising", "Policy review", "Data handling"],
     logo: "/logos/einc.png",
     logoAlt: "EINC",
+    logoLayout: "mark",
     logoBox: {
-      padding: "6px",
-      background: "#111111",
+      padding: "8px",
+      background: "#ffffff",
     },
   },
 ];
@@ -142,7 +140,7 @@ export const workshopPhotos: GalleryPhoto[] = [
   { src: "/gallery/workshop-02.jpg", alt: "Basma speaking to the room during a LaverageAI workshop" },
   { src: "/gallery/workshop-03.jpg", alt: "Attendees working through AI workflows on laptops" },
   { src: "/gallery/workshop-04.jpg", alt: "Participants reviewing work together on a laptop" },
-  { src: "/gallery/workshop-05.jpg", alt: "Founders Guide to AI session with Femme in Business" },
+  { src: "/gallery/workshop-05.jpg", alt: "The Founders Guide to AI session with Femme in Business" },
   { src: "/gallery/workshop-06.jpg", alt: "Hands on guidance during a workshop exercise" },
   { src: "/gallery/workshop-07.jpg", alt: "Attendees following along on laptops and tablets" },
   { src: "/gallery/workshop-08.jpg", alt: "Basma coaching a participant during a live session" },

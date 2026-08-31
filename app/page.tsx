@@ -20,8 +20,8 @@ export default function Home() {
       <Statement />
       <Workshops />
       <Feedback />
-      <FAQ />
       <Contact />
+      <FAQ />
     </>
   );
 }

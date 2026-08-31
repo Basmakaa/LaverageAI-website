@@ -32,6 +32,8 @@ export type Workshop = {
   logo: string;
   logoAlt: string;
   logoBox?: WorkshopLogoBox;
+  /** Full-width banner across the card, or a compact mark beside the title. */
+  logoLayout?: "full" | "mark";
 };
 
 export type GalleryPhoto = {
