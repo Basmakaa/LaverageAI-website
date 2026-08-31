@@ -173,33 +173,33 @@ export const testimonials: Testimonial[] = [
 
 export const faqs: FaqItem[] = [
   {
-    question: "Do you teach beginners?",
+    question: "What can LaverageAI help our team achieve?",
     answer:
-      "Yes. Beginners are who we are built for. Most of the teams we work with have never used AI beyond a few experiments. We start from where your team actually is and focus on the work they already do, so nothing feels abstract or technical.",
+      "We help your team use AI to work more efficiently, reduce repetitive tasks, and improve everyday workflows. Before each session, we look for practical opportunities within your organization to save your team time and money—ensuring the training addresses real needs and delivers tangible value.",
   },
   {
-    question: "Do we need ChatGPT Plus?",
+    question: "Are your workshops customized to our business?",
     answer:
-      "Not to get started. We can run sessions on free tiers, and we will tell you honestly when a paid plan is worth it for your use case. Where a paid tool is genuinely needed, we explain what it unlocks so you can make the call before spending anything.",
+      "Yes. We tailor each workshop to your team, industry, challenges, and existing workflows. Whenever possible, we use real examples from your organization so employees leave with skills they can apply immediately.",
   },
   {
-    question: "Can you train our whole company?",
+    question: "Does our team need prior AI experience?",
     answer:
-      "Yes. We run everything from single team workshops to company wide enablement programmes delivered department by department. Larger rollouts usually combine a shared foundation session with role specific training for marketing, HR, operations and leadership.",
+      "Not at all. Our sessions are designed to make AI clear and approachable, even for complete beginners. We adapt the content to your team’s experience level and explain everything without unnecessary technical jargon.",
   },
   {
-    question: "Do you build custom AI tools?",
+    question: "What does a typical engagement include?",
     answer:
-      "Yes. When training alone is not enough, we implement automations, internal assistants and reusable prompt systems around the tools your business already uses. The aim is always something your team can run without us.",
-  },
-  {
-    question: "Do you work remotely?",
-    answer:
-      "Yes. Workshops and implementation work are delivered remotely by default, and we can run sessions on site where that works better for your team. Timezone coverage is agreed before we start.",
+      "It may include a discovery session, workflow assessment, customized training, hands-on exercises, practical resources, and clear recommendations for next steps. The format is adapted to your organization’s needs and goals.",
   },
   {
     question: "How do you handle privacy and responsible AI use?",
     answer:
-      "Every engagement includes practical guidance on data handling, tool selection and verification. We help you set clear internal rules so your team adopts AI confidently without putting sensitive information where it should not go.",
+      "Privacy and responsible adoption are built into our training. We help teams understand what information should never be entered into AI tools, how to evaluate outputs, and how to establish clear internal guidelines for safe and accountable use.",
+  },
+  {
+    question: "Do you provide implementation support after the training?",
+    answer:
+      "Yes. Beyond workshops, we can help your team turn opportunities into practical workflows, automations, internal resources, or custom AI solutions. The level of implementation support depends on your needs and project scope.",
   },
 ];
