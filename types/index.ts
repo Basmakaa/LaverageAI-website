@@ -22,6 +22,8 @@ export type WorkshopLogoBox = {
   padding?: string;
   /** Square background. Default is off-white for contrast. */
   background?: string;
+  /** How the mark sits in the square. Default is contain. */
+  fit?: "contain" | "cover";
 };
 
 export type Workshop = {

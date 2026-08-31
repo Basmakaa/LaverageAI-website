@@ -119,8 +119,9 @@ export const workshops: Workshop[] = [
     logoAlt: "Femme in Business",
     logoLayout: "mark",
     logoBox: {
-      padding: "8px",
-      background: "#ffffff",
+      padding: "0",
+      background: "transparent",
+      fit: "cover",
     },
   },
   {

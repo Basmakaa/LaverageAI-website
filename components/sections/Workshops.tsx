@@ -37,11 +37,15 @@ export function Workshops() {
                 <Image
                   src={workshop.logo}
                   alt={workshop.logoAlt}
-                  width={workshop.logo.includes("einc") ? 256 : 1024}
-                  height={workshop.logo.includes("einc") ? 256 : 718}
+                  width={workshop.logo.includes("einc") ? 256 : 844}
+                  height={workshop.logo.includes("einc") ? 256 : 770}
                   quality={100}
                   unoptimized
-                  className="h-auto w-auto max-h-full max-w-full object-contain"
+                  className={
+                    workshop.logoBox?.fit === "cover"
+                      ? "h-full w-full object-cover"
+                      : "h-auto w-auto max-h-full max-w-full object-contain"
+                  }
                 />
               </div>
               <div className="min-w-0">
