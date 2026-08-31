@@ -72,7 +72,10 @@ export function HeroWave() {
   const reflectionCore = `${id}-ref-core`;
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_100%)]"
+    >
       <svg
         viewBox="0 0 1600 900"
         className="absolute inset-0 h-full w-full"
@@ -94,10 +97,11 @@ export function HeroWave() {
           </linearGradient>
           <linearGradient id={bloom} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#fff" stopOpacity="0" />
-            <stop offset="0.08" stopColor="#fff" stopOpacity="0.45" />
-            <stop offset="0.2" stopColor="#fff" stopOpacity="1" />
-            <stop offset="0.3" stopColor="#fff" stopOpacity="0.35" />
-            <stop offset="0.42" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.12" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.2" stopColor="#fff" stopOpacity="0.55" />
+            <stop offset="0.26" stopColor="#fff" stopOpacity="1" />
+            <stop offset="0.34" stopColor="#fff" stopOpacity="0.4" />
+            <stop offset="0.46" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
           <mask id={mask}>
             <rect width="1600" height="900" fill={`url(#${sides})`} />

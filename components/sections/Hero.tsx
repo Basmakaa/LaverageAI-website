@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#050505] pt-40 pb-24 sm:pt-48 sm:pb-32">
+    <section className="relative overflow-hidden bg-ink pt-40 pb-24 sm:pt-48 sm:pb-32">
       <div className="hero-grid animate-drift absolute inset-0" aria-hidden="true" />
       <HeroWave />
 
