@@ -12,9 +12,9 @@ const START_X = -80;
 const SPAN = 1760;
 const SEGMENTS = 8;
 const KEYFRAMES = 8;
-const BASE_Y = 400;
+const BASE_Y = 318;
 const AMPLITUDE = 70;
-const MIRROR_AXIS = 508;
+const MIRROR_AXIS = 426;
 const OMEGA = (Math.PI * 2) / SPAN;
 
 export const WAVE_DURATION = 24;
