@@ -1,17 +1,19 @@
+import { HeroWave } from "@/components/animations/HeroWave";
 import { Reveal } from "@/components/animations/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48 sm:pb-32">
+    <section className="relative overflow-hidden bg-[#050505] pt-40 pb-24 sm:pt-48 sm:pb-32">
       {/* Decorative background layers. */}
       <div className="hero-grid animate-drift absolute inset-0" aria-hidden="true" />
       <div
         className="glow-ellipse animate-breathe pointer-events-none absolute top-[-12rem] left-1/2 h-[36rem] w-[min(75rem,140%)] -translate-x-1/2"
         aria-hidden="true"
       />
+      <HeroWave />
 
-      <div className="shell relative">
+      <div className="shell relative z-10">
         <Reveal className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-6xl lg:text-8xl">
             Helping businesses leverage AI{" "}
