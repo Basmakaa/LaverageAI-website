@@ -5,20 +5,18 @@ export function Industries() {
   const track = [...industries, ...industries];
 
   return (
-    <section
-      aria-label="Teams we support"
-      className="overflow-hidden border-y border-line bg-surface"
-    >
+    <section aria-label="Departments we have helped" className="overflow-hidden border-y border-line bg-surface">
+      <p className="shell pt-8 text-center text-xs font-semibold tracking-[0.16em] text-faint uppercase">
+        We helped multiple departments
+      </p>
       <div className="animate-marquee flex w-max items-center">
         {track.map((industry, i) => (
           <span
             key={`${industry}-${i}`}
-            className="flex items-center px-8 py-6 text-xs font-semibold tracking-[0.18em] text-faint uppercase"
+            className="flex items-center px-8 py-5 text-xs font-semibold tracking-[0.18em] text-faint uppercase"
           >
             {industry}
-            <span aria-hidden="true" className="ml-16 text-white/15">
-              ✦
-            </span>
+            <span aria-hidden="true" className="ml-16 h-px w-8 bg-white/18" />
           </span>
         ))}
       </div>

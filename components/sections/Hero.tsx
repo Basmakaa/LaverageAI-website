@@ -1,12 +1,6 @@
 import { Reveal } from "@/components/animations/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 
-const proofPoints = [
-  ["Practical", "Built around your real workflows"],
-  ["Human first", "Designed for teams without a technical background"],
-  ["Tool agnostic", "Claude, ChatGPT and your stack"],
-];
-
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48 sm:pb-32">
@@ -19,12 +13,7 @@ export function Hero() {
 
       <div className="shell relative">
         <Reveal className="mx-auto max-w-4xl text-center">
-          <p className="inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-            <span className="h-1.5 w-1.5 rounded-full bg-fg shadow-[0_0_16px_rgba(255,255,255,0.8)]" />
-            Practical AI for real businesses
-          </p>
-
-          <h1 className="mt-7 text-5xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-6xl lg:text-8xl">
+          <h1 className="text-5xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance sm:text-6xl lg:text-8xl">
             Helping businesses leverage AI{" "}
             <span className="text-white/45">with confidence.</span>
           </h1>
@@ -41,18 +30,6 @@ export function Hero() {
               Contact Us
             </ButtonLink>
           </div>
-        </Reveal>
-
-        <Reveal
-          delay={0.15}
-          className="mt-24 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3"
-        >
-          {proofPoints.map(([title, detail]) => (
-            <div key={title} className="bg-ink px-7 py-7">
-              <p className="text-sm font-semibold">{title}</p>
-              <p className="mt-2 text-sm text-faint">{detail}</p>
-            </div>
-          ))}
         </Reveal>
       </div>
     </section>

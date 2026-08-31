@@ -22,6 +22,13 @@ export type Workshop = {
   title: string;
   description: string;
   topics: string[];
+  logo: string;
+  logoAlt: string;
+};
+
+export type GalleryPhoto = {
+  src: string;
+  alt: string;
 };
 
 export type FaqItem = {

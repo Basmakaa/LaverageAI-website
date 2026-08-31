@@ -9,7 +9,7 @@ import {
   Workflow,
 } from "lucide-react";
 
-import type { FaqItem, NavLink, ProcessStep, Service, Testimonial, Workshop } from "@/types";
+import type { FaqItem, GalleryPhoto, NavLink, ProcessStep, Service, Testimonial, Workshop } from "@/types";
 
 export const navLinks: NavLink[] = [
   { label: "Services", href: "#services" },
@@ -110,19 +110,34 @@ export const processSteps: ProcessStep[] = [
 
 export const workshops: Workshop[] = [
   {
-    audience: "Women in Business",
-    title: "AI for Marketing & Content Creation",
+    audience: "Femme in Business",
+    title: "Founders Guide to AI",
     description:
-      "A practical session on using AI to plan, draft and repurpose marketing content, built for a community of business owners without a technical background.",
-    topics: ["Content ideation", "Repurposing", "Brand voice", "Responsible use"],
+      "Delivered as Founders Guide to AI, this session was built around marketing and content: planning, drafting and repurposing work that founders actually need to ship.",
+    topics: ["Marketing", "Content creation", "Brand voice", "Repurposing"],
+    logo: "/logos/femme-in-business.png",
+    logoAlt: "Femme in Business",
   },
   {
-    audience: "HR Team",
+    audience: "EINC",
     title: "Claude for Small Businesses",
     description:
       "Everyday Claude workflows for a small HR team: drafting, summarising, organising information and improving quality without technical complexity.",
     topics: ["Drafting", "Summarising", "Policy review", "Data handling"],
+    logo: "/logos/einc.png",
+    logoAlt: "EINC",
   },
+];
+
+export const workshopPhotos: GalleryPhoto[] = [
+  { src: "/gallery/workshop-01.jpg", alt: "Workshop Q and A with attendees and laptops in the room" },
+  { src: "/gallery/workshop-02.jpg", alt: "Basma speaking to the room during a LaverageAI workshop" },
+  { src: "/gallery/workshop-03.jpg", alt: "Attendees working through AI workflows on laptops" },
+  { src: "/gallery/workshop-04.jpg", alt: "Participants reviewing work together on a laptop" },
+  { src: "/gallery/workshop-05.jpg", alt: "Founders Guide to AI session with Femme in Business" },
+  { src: "/gallery/workshop-06.jpg", alt: "Hands on guidance during a workshop exercise" },
+  { src: "/gallery/workshop-07.jpg", alt: "Attendees following along on laptops and tablets" },
+  { src: "/gallery/workshop-08.jpg", alt: "Basma coaching a participant during a live session" },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -134,8 +149,8 @@ export const testimonials: Testimonial[] = [
       "I worked closely with Basma while creating the teaching materials for the AI workshop, and one of the most valuable parts of that experience was having her guidance throughout the process. As an experienced Software Engineer, she has a strong understanding of how AI works from a technical perspective, while also staying very up to date with new developments like AI agents and emerging tools. AI is evolving incredibly quickly, with new tools and capabilities coming out almost every day, so having someone who actively keeps up with these changes was extremely valuable. She was able to bring that knowledge into the workshop in a way that was practical and easy to understand. I would definitely recommend Basma to other teams and businesses, especially those looking for guidance from someone who understands both the technical side of AI and how the latest developments can actually be applied in the workplace.",
   },
   {
-    name: "Femme in Business",
-    title: "Cofounder",
+    name: "Prisha Dev",
+    title: "Journalist and Co-founder FemmeInBusiness",
     rating: 5,
     quote:
       "Basma did a phenomenal job at co hosting an AI for content creation workshop with us. The topics were engaging, insightful and informative. Her approach in guiding the workshop was clear and concise. The attendees genuinely enjoyed the session and took away lots of new info. I would 100% recommend to other teams and businesses.",

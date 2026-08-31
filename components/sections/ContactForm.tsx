@@ -12,24 +12,58 @@ const fieldClass =
 const labelClass = "text-xs font-semibold tracking-[0.12em] text-faint uppercase";
 
 export function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState("");
   const id = useId();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "");
-    const email = String(data.get("email") ?? "");
-    const company = String(data.get("company") ?? "");
-    const message = String(data.get("message") ?? "");
 
-    const subject = encodeURIComponent(`Workshop enquiry: ${company || name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\n${message}`,
+    setStatus("sending");
+    setError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(data.get("name") ?? ""),
+          email: String(data.get("email") ?? ""),
+          company: String(data.get("company") ?? ""),
+          message: String(data.get("message") ?? ""),
+          website: String(data.get("website") ?? ""),
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error || "We could not send your message.");
+      }
+
+      setStatus("sent");
+    } catch (err) {
+      setStatus("error");
+      setError(err instanceof Error ? err.message : "We could not send your message.");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <div
+        role="status"
+        className="grid min-h-[28rem] content-center gap-4 rounded-2xl border border-line bg-card p-6 sm:p-8"
+      >
+        <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">Message received</p>
+        <h3 className="text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
+          Sent. We will get back to you very soon.
+        </h3>
+        <p className="max-w-md text-base leading-relaxed text-muted">
+          Thank you for writing in. We read every enquiry personally and typically reply within one
+          business day.
+        </p>
+      </div>
     );
-
-    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-    setSent(true);
   }
 
   return (
@@ -37,6 +71,11 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="grid gap-5 rounded-2xl border border-line bg-card p-6 sm:p-8"
     >
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor={`${id}-website`}>Website</label>
+        <input id={`${id}-website`} name="website" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="grid gap-2">
           <label htmlFor={`${id}-name`} className={labelClass}>
@@ -94,15 +133,13 @@ export function ContactForm() {
         />
       </div>
 
-      <Button type="submit" className="w-full sm:w-max">
-        Send Message
-        <ArrowUpRight size={16} />
+      <Button type="submit" disabled={status === "sending"} className="w-full sm:w-max">
+        {status === "sending" ? "Sending…" : "Send Message"}
+        {status !== "sending" && <ArrowUpRight size={16} />}
       </Button>
 
       <p aria-live="polite" className="text-xs text-faint">
-        {sent
-          ? "Your email app should now be open with the message ready to send."
-          : `Prefer email? Reach us directly at ${site.email}`}
+        {error || `Prefer email? Reach us directly at ${site.email}`}
       </p>
     </form>
   );

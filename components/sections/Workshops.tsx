@@ -1,6 +1,8 @@
+import Image from "next/image";
+
 import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { workshops } from "@/lib/content";
+import { workshopPhotos, workshops } from "@/lib/content";
 
 export function Workshops() {
   return (
@@ -23,10 +25,17 @@ export function Workshops() {
             delay={i * 0.1}
             className="flex h-full flex-col rounded-2xl border border-line bg-card p-8 transition duration-300 hover:-translate-y-1 hover:border-line-strong sm:p-10"
           >
-            <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
+            <Image
+              src={workshop.logo}
+              alt={workshop.logoAlt}
+              width={160}
+              height={64}
+              className="h-12 w-auto max-w-[10rem] object-contain object-left"
+            />
+            <p className="mt-6 text-xs font-semibold tracking-[0.16em] text-faint uppercase">
               {workshop.audience}
             </p>
-            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
+            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
               {workshop.title}
             </h3>
             <p className="mt-4 text-base leading-relaxed text-muted">{workshop.description}</p>
@@ -42,6 +51,30 @@ export function Workshops() {
             </ul>
           </Reveal>
         ))}
+      </div>
+
+      <div className="mt-20">
+        <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">From the room</p>
+        <h3 className="mt-4 text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+          Real workshops, real teams
+        </h3>
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {workshopPhotos.map((photo, i) => (
+            <Reveal
+              key={photo.src}
+              delay={(i % 4) * 0.05}
+              className="overflow-hidden rounded-2xl border border-line bg-card"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={682}
+                height={1024}
+                className="aspect-[3/4] h-full w-full object-cover"
+              />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
