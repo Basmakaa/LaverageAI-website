@@ -12,9 +12,9 @@ const START_X = -80;
 const SPAN = 1760;
 const SEGMENTS = 8;
 const KEYFRAMES = 8;
-const BASE_Y = 318;
+const BASE_Y = 195;
 const AMPLITUDE = 70;
-const MIRROR_AXIS = 426;
+const MIRROR_AXIS = 303;
 const OMEGA = (Math.PI * 2) / SPAN;
 
 export const WAVE_DURATION = 24;
@@ -63,6 +63,8 @@ export function HeroWave() {
   const mask = `${id}-mask`;
   const reflectionMask = `${id}-reflection`;
   const fadeDown = `${id}-fade-down`;
+  const bloom = `${id}-bloom`;
+  const bloomMask = `${id}-bloom-mask`;
   const glow = `${id}-glow`;
   const core = `${id}-core`;
 
@@ -80,18 +82,28 @@ export function HeroWave() {
             <stop offset="86%" stopColor="#fff" stopOpacity="1" />
             <stop offset="100%" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
-          <linearGradient id={fadeDown} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="48%" stopColor="#fff" stopOpacity="0.7" />
-            <stop offset="82%" stopColor="#fff" stopOpacity="0" />
+          <linearGradient id={fadeDown} x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stopColor="#fff" stopOpacity="0.55" />
+            <stop offset="70%" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id={bloom} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.08" stopColor="#fff" stopOpacity="0.45" />
+            <stop offset="0.2" stopColor="#fff" stopOpacity="1" />
+            <stop offset="0.3" stopColor="#fff" stopOpacity="0.35" />
+            <stop offset="0.42" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
           <mask id={mask}>
             <rect width="1600" height="900" fill={`url(#${sides})`} />
           </mask>
+          <mask id={bloomMask}>
+            <rect width="1600" height="900" fill={`url(#${bloom})`} />
+          </mask>
           <mask id={reflectionMask}>
             <rect width="1600" height="900" fill={`url(#${fadeDown})`} />
           </mask>
-          <filter id={glow} x="-12%" y="-80%" width="124%" height="260%">
-            <feGaussianBlur stdDeviation="26" />
+          <filter id={glow} x="-16%" y="-120%" width="132%" height="340%">
+            <feGaussianBlur stdDeviation="38" />
           </filter>
           <filter id={core} x="-6%" y="-40%" width="112%" height="180%">
             <feGaussianBlur stdDeviation="5" />
@@ -99,28 +111,30 @@ export function HeroWave() {
         </defs>
 
         <g mask={`url(#${mask})`}>
-          <g mask={`url(#${reflectionMask})`}>
+          <g mask={`url(#${bloomMask})`}>
+            <g mask={`url(#${reflectionMask})`}>
+              <WavePair
+                paths={REFLECTIONS}
+                reduceMotion={!!reduceMotion}
+                glow={`url(#${glow})`}
+                core={`url(#${core})`}
+                glowWidth={40}
+                glowOpacity={0.1}
+                coreWidth={6}
+                coreOpacity={0.22}
+              />
+            </g>
             <WavePair
-              paths={REFLECTIONS}
+              paths={LINES}
               reduceMotion={!!reduceMotion}
               glow={`url(#${glow})`}
               core={`url(#${core})`}
-              glowWidth={36}
+              glowWidth={40}
               glowOpacity={0.14}
-              coreWidth={6}
-              coreOpacity={0.32}
+              coreWidth={7.5}
+              coreOpacity={0.9}
             />
           </g>
-          <WavePair
-            paths={LINES}
-            reduceMotion={!!reduceMotion}
-            glow={`url(#${glow})`}
-            core={`url(#${core})`}
-            glowWidth={36}
-            glowOpacity={0.2}
-            coreWidth={7.5}
-            coreOpacity={0.9}
-          />
         </g>
       </svg>
     </div>
