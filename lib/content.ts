@@ -138,6 +138,10 @@ export const workshopPhotos: GalleryPhoto[] = [
   { src: "/gallery/workshop-06.jpg", alt: "Hands on guidance during a workshop exercise" },
   { src: "/gallery/workshop-07.jpg", alt: "Attendees following along on laptops and tablets" },
   { src: "/gallery/workshop-08.jpg", alt: "Basma coaching a participant during a live session" },
+  {
+    src: "/gallery/workshop-09.jpg",
+    alt: "Attendees clapping and smiling during a LaverageAI workshop",
+  },
 ];
 
 export const testimonials: Testimonial[] = [

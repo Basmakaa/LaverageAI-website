@@ -23,32 +23,42 @@ export function Workshops() {
             key={workshop.title}
             as="article"
             delay={i * 0.1}
-            className="flex h-full flex-col rounded-2xl border border-line bg-card p-8 transition duration-300 hover:-translate-y-1 hover:border-line-strong sm:p-10"
+            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card transition duration-300 hover:-translate-y-1 hover:border-line-strong"
           >
-            <Image
-              src={workshop.logo}
-              alt={workshop.logoAlt}
-              width={160}
-              height={64}
-              className="h-12 w-auto max-w-[10rem] object-contain object-left"
-            />
-            <p className="mt-6 text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-              {workshop.audience}
-            </p>
-            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
-              {workshop.title}
-            </h3>
-            <p className="mt-4 text-base leading-relaxed text-muted">{workshop.description}</p>
-            <ul className="mt-8 flex flex-wrap gap-2">
-              {workshop.topics.map((topic) => (
-                <li
-                  key={topic}
-                  className="rounded-full border border-line px-3.5 py-1.5 text-xs text-muted"
-                >
-                  {topic}
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center justify-between gap-4 border-b border-line bg-gradient-to-br from-white/[0.05] to-transparent px-6 py-6 sm:px-8">
+              <div className="flex h-20 items-center rounded-xl border border-white/12 bg-black/50 px-5 py-3">
+                <Image
+                  src={workshop.logo}
+                  alt={workshop.logoAlt}
+                  width={220}
+                  height={80}
+                  className="h-14 w-auto max-w-[13rem] object-contain object-left"
+                />
+              </div>
+              <span className="text-xs font-semibold tracking-[0.16em] text-white/25">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div className="flex flex-1 flex-col p-6 sm:p-8">
+              <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
+                {workshop.audience}
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
+                {workshop.title}
+              </h3>
+              <p className="mt-4 text-base leading-relaxed text-muted">{workshop.description}</p>
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {workshop.topics.map((topic) => (
+                  <li
+                    key={topic}
+                    className="rounded-full border border-line px-3.5 py-1.5 text-xs text-muted transition-colors group-hover:border-line-strong"
+                  >
+                    {topic}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
         ))}
       </div>

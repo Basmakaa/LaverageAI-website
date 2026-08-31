@@ -11,6 +11,62 @@ const fieldClass =
 
 const labelClass = "text-xs font-semibold tracking-[0.12em] text-faint uppercase";
 
+type Enquiry = {
+  name: string;
+  email: string;
+  company: string;
+  message: string;
+  website: string;
+};
+
+function formsubmitBody(enquiry: Enquiry) {
+  return {
+    name: enquiry.name,
+    email: enquiry.email,
+    company: enquiry.company,
+    message: enquiry.message,
+    _replyto: enquiry.email,
+    _subject: `Website enquiry from ${enquiry.name}${enquiry.company ? ` (${enquiry.company})` : ""}`,
+    _template: "table",
+    _captcha: "false",
+  };
+}
+
+function isDelivered(result: { success?: string | boolean; message?: string } | null) {
+  if (!result) return false;
+  if (result.success === true || result.success === "true") return true;
+  return typeof result.message === "string" && result.message.toLowerCase().includes("activation");
+}
+
+async function sendEnquiry(enquiry: Enquiry) {
+  if (enquiry.website) return true;
+
+  try {
+    const direct = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formsubmitBody(enquiry)),
+    });
+    const directPayload = (await direct.json().catch(() => null)) as {
+      success?: string | boolean;
+      message?: string;
+    } | null;
+    if (isDelivered(directPayload)) return true;
+  } catch {
+    // Fall through to the same-origin API if the browser blocks FormSubmit.
+  }
+
+  const fallback = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(enquiry),
+  });
+  return fallback.ok;
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
@@ -23,24 +79,19 @@ export function ContactForm() {
     setStatus("sending");
     setError("");
 
+    const payload = {
+      name: String(data.get("name") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      company: String(data.get("company") ?? "").trim(),
+      message: String(data.get("message") ?? "").trim(),
+      website: String(data.get("website") ?? "").trim(),
+    };
+
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: String(data.get("name") ?? ""),
-          email: String(data.get("email") ?? ""),
-          company: String(data.get("company") ?? ""),
-          message: String(data.get("message") ?? ""),
-          website: String(data.get("website") ?? ""),
-        }),
-      });
-
-      if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(payload?.error || "We could not send your message.");
+      const delivered = await sendEnquiry(payload);
+      if (!delivered) {
+        throw new Error("We could not send your message.");
       }
-
       setStatus("sent");
     } catch (err) {
       setStatus("error");

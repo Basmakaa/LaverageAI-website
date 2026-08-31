@@ -7,7 +7,7 @@ export function Industries() {
   return (
     <section aria-label="Departments we have helped" className="overflow-hidden border-y border-line bg-surface">
       <p className="shell pt-8 text-center text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-        We helped multiple departments
+        We help
       </p>
       <div className="animate-marquee flex w-max items-center">
         {track.map((industry, i) => (

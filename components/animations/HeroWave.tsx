@@ -5,23 +5,18 @@ import { useId } from "react";
 
 /**
  * Compatible cubic paths (M + C + C) so Framer Motion can morph `d` without jumps.
- * Y is in a 400-tall viewBox. Lower Y = higher on screen.
- *
- * 1. Gentle upward arch
- * 2. Flatter horizontal curve
- * 3. Asymmetrical wave (left higher)
- * 4. Wider, softer downward curve
- * 5. Return to 1 for a seamless loop
+ * Y is in a 380-tall viewBox. Lower Y = higher on screen.
+ * Centre is a flattened plateau so the form reads as a horizon, not a semicircle.
  */
 export const WAVE_PATHS = [
-  "M -120 238 C 300 238 520 118 800 112 C 1080 106 1300 236 1720 242",
-  "M -120 204 C 300 198 520 212 800 202 C 1080 192 1300 210 1720 200",
-  "M -120 152 C 280 146 520 176 800 214 C 1100 258 1340 268 1720 248",
-  "M -120 176 C 300 186 520 276 800 282 C 1080 288 1300 188 1720 178",
-  "M -120 238 C 300 238 520 118 800 112 C 1080 106 1300 236 1720 242",
+  "M -280 228 C 360 226 620 168 900 164 C 1180 160 1480 224 2080 230",
+  "M -280 216 C 360 214 640 188 900 186 C 1160 184 1480 218 2080 214",
+  "M -280 206 C 340 202 640 176 900 190 C 1180 204 1500 222 2080 220",
+  "M -280 220 C 360 222 640 204 900 208 C 1160 212 1480 218 2080 212",
+  "M -280 228 C 360 226 620 168 900 164 C 1180 160 1480 224 2080 230",
 ] as const;
 
-export const WAVE_DURATION = 12;
+export const WAVE_DURATION = 14;
 
 const ease = "easeInOut" as const;
 
@@ -29,6 +24,7 @@ export function HeroWave() {
   const reduceMotion = useReducedMotion();
   const id = useId();
   const fade = `${id}-fade`;
+  const glowCore = `${id}-glow-core`;
   const glowMedium = `${id}-glow-md`;
   const glowWide = `${id}-glow-wide`;
 
@@ -37,20 +33,23 @@ export function HeroWave() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      {/* Soft atmospheric glow behind the headline. */}
-      <div className="absolute top-[40%] left-1/2 h-[32rem] w-[min(56rem,90vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.055] blur-3xl sm:top-[46%]" />
+      {/* Broad bloom behind the arch, fading toward the headline. */}
+      <div className="absolute top-[20%] left-1/2 h-[320px] w-[75vw] -translate-x-1/2 -translate-y-1/2 rounded-[100%] bg-white/[0.07] blur-[110px] sm:h-[380px]" />
 
       <motion.div
-        className="absolute top-[34%] left-1/2 w-[160vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-55 sm:top-[46%] sm:opacity-100"
+        className="absolute top-[17%] left-1/2 w-[180vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-60 sm:top-[21%] sm:opacity-100"
         animate={
           reduceMotion
             ? undefined
-            : { x: ["-1.8%", "2%", "-1.2%", "1.5%", "-1.8%"] }
+            : {
+                x: ["-1.1%", "1.2%", "-0.8%", "0.9%", "-1.1%"],
+                y: ["0%", "-1.2%", "0.6%", "-0.5%", "0%"],
+              }
         }
         transition={{ duration: WAVE_DURATION, ease, repeat: Infinity }}
       >
         <svg
-          viewBox="0 0 1600 400"
+          viewBox="0 0 1800 380"
           className="h-auto w-full"
           preserveAspectRatio="xMidYMid slice"
           overflow="visible"
@@ -58,15 +57,18 @@ export function HeroWave() {
           <defs>
             <linearGradient id={fade} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
-              <stop offset="16%" stopColor="#ffffff" stopOpacity="1" />
-              <stop offset="84%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="14%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="86%" stopColor="#ffffff" stopOpacity="1" />
               <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </linearGradient>
-            <filter id={glowWide} x="-35%" y="-120%" width="170%" height="340%">
-              <feGaussianBlur stdDeviation="42" />
+            <filter id={glowWide} x="-45%" y="-180%" width="190%" height="460%">
+              <feGaussianBlur stdDeviation="70" />
             </filter>
-            <filter id={glowMedium} x="-20%" y="-80%" width="140%" height="260%">
-              <feGaussianBlur stdDeviation="12" />
+            <filter id={glowMedium} x="-30%" y="-120%" width="160%" height="340%">
+              <feGaussianBlur stdDeviation="18" />
+            </filter>
+            <filter id={glowCore} x="-20%" y="-80%" width="140%" height="260%">
+              <feGaussianBlur stdDeviation="6" />
             </filter>
           </defs>
 
@@ -74,25 +76,25 @@ export function HeroWave() {
             paths={WAVE_PATHS}
             reduceMotion={!!reduceMotion}
             stroke={`url(#${fade})`}
-            strokeWidth={90}
-            opacity={0.08}
+            strokeWidth={95}
+            opacity={0.09}
             filter={`url(#${glowWide})`}
           />
           <WaveStroke
             paths={WAVE_PATHS}
             reduceMotion={!!reduceMotion}
             stroke={`url(#${fade})`}
-            strokeWidth={18}
-            opacity={0.24}
+            strokeWidth={24}
+            opacity={0.22}
             filter={`url(#${glowMedium})`}
           />
           <WaveStroke
             paths={WAVE_PATHS}
             reduceMotion={!!reduceMotion}
             stroke={`url(#${fade})`}
-            strokeWidth={1.6}
-            opacity={0.78}
-            sharp
+            strokeWidth={6.5}
+            opacity={0.64}
+            filter={`url(#${glowCore})`}
           />
         </svg>
       </motion.div>
@@ -106,8 +108,7 @@ type WaveStrokeProps = {
   stroke: string;
   strokeWidth: number;
   opacity: number;
-  filter?: string;
-  sharp?: boolean;
+  filter: string;
 };
 
 function WaveStroke({
@@ -117,7 +118,6 @@ function WaveStroke({
   strokeWidth,
   opacity,
   filter,
-  sharp = false,
 }: WaveStrokeProps) {
   return (
     <motion.path
@@ -130,7 +130,6 @@ function WaveStroke({
       strokeLinecap="round"
       opacity={opacity}
       filter={filter}
-      vectorEffect={sharp ? "non-scaling-stroke" : undefined}
     />
   );
 }

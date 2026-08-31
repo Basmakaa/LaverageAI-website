@@ -19,7 +19,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  // Honeypot: bots fill hidden fields. Treat as success so they get no signal.
   if (body.website) {
     return NextResponse.json({ ok: true });
   }
@@ -33,9 +32,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please complete the required fields." }, { status: 400 });
   }
 
+  const payload = {
+    name,
+    email,
+    company,
+    message,
+    _replyto: email,
+    _subject: `Website enquiry from ${name}${company ? ` (${company})` : ""}`,
+    _template: "table",
+    _captcha: "false",
+  };
+
   const origin = request.headers.get("origin") || site.url;
 
-  const response = await fetch(`https://formsubmit.co/ajax/${site.email}`, {
+  const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,32 +53,28 @@ export async function POST(request: Request) {
       Origin: origin,
       Referer: `${origin}/`,
     },
-    body: JSON.stringify({
-      name,
-      email,
-      company,
-      message,
-      _replyto: email,
-      _subject: `Website enquiry from ${name}${company ? ` (${company})` : ""}`,
-      _template: "table",
-      _captcha: "false",
-    }),
+    body: JSON.stringify(payload),
   });
 
-  const payload = (await response.json().catch(() => null)) as {
+  const result = (await response.json().catch(() => null)) as {
     success?: string | boolean;
     message?: string;
   } | null;
 
+  const ok = result?.success === true || result?.success === "true";
   const activating =
-    typeof payload?.message === "string" && payload.message.toLowerCase().includes("activation");
+    typeof result?.message === "string" && result.message.toLowerCase().includes("activation");
 
-  if (activating || payload?.success === true || payload?.success === "true") {
-    return NextResponse.json({ ok: true });
+  if (ok || activating) {
+    return NextResponse.json({ ok: true, activating: activating || undefined });
   }
 
   return NextResponse.json(
-    { error: "We could not send your message. Please email us directly." },
+    {
+      error:
+        result?.message ||
+        "We could not send your message. Please email us directly at " + site.email + ".",
+    },
     { status: 502 },
   );
 }
