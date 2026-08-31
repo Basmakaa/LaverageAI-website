@@ -12,9 +12,9 @@ const START_X = -80;
 const SPAN = 1760;
 const SEGMENTS = 8;
 const KEYFRAMES = 16;
-const BASE_Y = 195;
+const BASE_Y = 218;
 const AMPLITUDE = 70;
-const MIRROR_AXIS = 408;
+const MIRROR_AXIS = 431;
 const OMEGA = (Math.PI * 2) / SPAN;
 
 export const WAVE_DURATION = 26;
@@ -148,9 +148,9 @@ export function HeroWave() {
               glow={`url(#${reflectionGlow})`}
               core={`url(#${reflectionCore})`}
               glowWidth={48}
-              glowOpacity={0.08}
+              glowOpacity={0.14}
               coreWidth={8}
-              coreOpacity={0.16}
+              coreOpacity={0.34}
             />
           </g>
         </g>
