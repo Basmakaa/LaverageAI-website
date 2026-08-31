@@ -5,12 +5,7 @@ import { ButtonLink } from "@/components/ui/Button";
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-[#050505] pt-40 pb-24 sm:pt-48 sm:pb-32">
-      {/* Decorative background layers. */}
       <div className="hero-grid animate-drift absolute inset-0" aria-hidden="true" />
-      <div
-        className="glow-ellipse animate-breathe pointer-events-none absolute top-[-12rem] left-1/2 h-[36rem] w-[min(75rem,140%)] -translate-x-1/2"
-        aria-hidden="true"
-      />
       <HeroWave />
 
       <div className="shell relative z-10">

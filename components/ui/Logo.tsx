@@ -12,8 +12,10 @@ export function Logo({ compact = false, className }: LogoProps) {
       <Image
         src="/logo.png"
         alt="LaverageAI"
-        width={36}
-        height={36}
+        width={72}
+        height={72}
+        quality={100}
+        unoptimized
         className="h-9 w-9 shrink-0 rounded-md"
         priority
       />

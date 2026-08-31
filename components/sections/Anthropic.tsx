@@ -16,33 +16,30 @@ export function Anthropic() {
       </p>
 
       <Reveal className="shell relative">
-        <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-center lg:gap-16">
-          <div className="flex shrink-0 items-center gap-6">
-            <div className="relative h-16 w-16 overflow-hidden rounded-full border border-white/10 bg-black sm:h-[4.5rem] sm:w-[4.5rem]">
-              <Image
-                src="/logos/anthropic.png"
-                alt="Anthropic"
-                fill
-                className="object-cover object-[18%_center] grayscale contrast-125 brightness-90 opacity-70"
-                sizes="72px"
-              />
-            </div>
-            <span aria-hidden="true" className="hidden h-16 w-px bg-white/12 lg:block" />
+        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          <div className="relative h-[7.5rem] w-[12.5rem] overflow-hidden rounded-2xl sm:h-[8.75rem] sm:w-[14.5rem]">
+            <Image
+              src="/logos/anthropic.png"
+              alt="Anthropic"
+              fill
+              quality={100}
+              unoptimized
+              className="object-cover"
+              sizes="(min-width: 640px) 232px, 200px"
+            />
           </div>
 
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold tracking-[0.18em] text-faint uppercase">
-              Trusted expertise
-            </p>
-            <h2 className="mt-4 text-3xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-5xl">
-              Selected by <span className="text-white/40">Anthropic</span>
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
-              LaverageAI was selected for Anthropic’s 2026 Claude SMB Trainer Program in New York
-              City, receiving direct training to help businesses adopt Claude, improve workflows,
-              increase productivity, and implement AI responsibly.
-            </p>
-          </div>
+          <p className="mt-10 text-xs font-semibold tracking-[0.18em] text-faint uppercase">
+            Trusted expertise
+          </p>
+          <h2 className="mt-4 text-3xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-5xl">
+            Selected by <span className="text-white/40">Anthropic</span>
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+            LaverageAI was selected for Anthropic’s 2026 Claude SMB Trainer Program in New York
+            City, receiving direct training to help businesses adopt Claude, improve workflows,
+            increase productivity, and implement AI responsibly.
+          </p>
         </div>
       </Reveal>
     </section>
