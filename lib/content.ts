@@ -117,7 +117,11 @@ export const workshops: Workshop[] = [
     topics: ["Marketing", "Content creation", "Brand voice", "Repurposing"],
     logo: "/logos/femme-in-business.png",
     logoAlt: "Femme in Business",
-    logoLayout: "full",
+    logoLayout: "mark",
+    logoBox: {
+      padding: "8px",
+      background: "#ffffff",
+    },
   },
   {
     audience: "EINC",

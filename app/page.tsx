@@ -16,8 +16,8 @@ export default function Home() {
       <Anthropic />
       <Industries />
       <Services />
-      <Process />
       <Statement />
+      <Process />
       <Workshops />
       <Feedback />
       <Contact />

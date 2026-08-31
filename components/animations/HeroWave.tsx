@@ -18,7 +18,7 @@ const HORIZONS: readonly Horizon[] = [
   [540, 320, 260, 380, 520, 620, 480],
 ];
 
-export const WAVE_DURATION = 10;
+export const WAVE_DURATION = 24;
 const ease = "easeInOut" as const;
 
 function line(y: Horizon) {
@@ -52,11 +52,11 @@ export function HeroWave() {
           <mask id={mask}>
             <rect width="1600" height="900" fill={`url(#${sides})`} />
           </mask>
-          <filter id={glow} x="-8%" y="-50%" width="116%" height="200%">
-            <feGaussianBlur stdDeviation="10" />
+          <filter id={glow} x="-12%" y="-80%" width="124%" height="260%">
+            <feGaussianBlur stdDeviation="22" />
           </filter>
-          <filter id={core} x="-4%" y="-30%" width="108%" height="160%">
-            <feGaussianBlur stdDeviation="2.5" />
+          <filter id={core} x="-6%" y="-40%" width="112%" height="180%">
+            <feGaussianBlur stdDeviation="4" />
           </filter>
         </defs>
 
@@ -67,9 +67,9 @@ export function HeroWave() {
             transition={{ duration: WAVE_DURATION, ease, repeat: Infinity }}
             fill="none"
             stroke="#ffffff"
-            strokeWidth="14"
+            strokeWidth="22"
             strokeLinecap="round"
-            strokeOpacity="0.22"
+            strokeOpacity="0.2"
             filter={`url(#${glow})`}
           />
           <motion.path
@@ -78,9 +78,9 @@ export function HeroWave() {
             transition={{ duration: WAVE_DURATION, ease, repeat: Infinity }}
             fill="none"
             stroke="#ffffff"
-            strokeWidth="2.5"
+            strokeWidth="4.5"
             strokeLinecap="round"
-            strokeOpacity="0.9"
+            strokeOpacity="0.88"
             filter={`url(#${core})`}
           />
         </g>
