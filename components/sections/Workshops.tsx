@@ -18,49 +18,55 @@ export function Workshops() {
         description="Every session starts from the work your team already does. These are examples of teams we have already helped."
       />
 
-      <div className="mt-16 grid gap-6 lg:grid-cols-2">
+      <div className="mt-16 grid items-stretch gap-6 lg:grid-cols-2">
         {workshops.map((workshop, i) => (
           <Reveal
             key={workshop.title}
             as="article"
             delay={i * 0.1}
-            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#161412] to-[#0c0c0c] transition duration-500 hover:-translate-y-1 hover:border-white/[0.16]"
+            className="group flex h-full flex-col rounded-[1.75rem] border border-white/12 p-[clamp(1.75rem,4vw,3rem)] shadow-[0_24px_60px_rgba(0,0,0,0.35)] transition duration-[350ms] [background:linear-gradient(145deg,#171717_0%,#0a0a0a_48%,#080808_100%)] hover:-translate-y-1.5 hover:border-white/20 motion-reduce:hover:translate-y-0"
           >
-            <div className="flex min-h-[11rem] items-center justify-center bg-[#f4efe6] px-10 py-12">
-              <Image
-                src={workshop.logo}
-                alt={workshop.logoAlt}
-                width={workshop.logo.includes("einc") ? 256 : 1024}
-                height={workshop.logo.includes("einc") ? 256 : 502}
-                quality={100}
-                unoptimized
-                className={
-                  workshop.logo.includes("einc")
-                    ? "h-20 w-20 rounded-md object-cover object-left"
-                    : "h-[4.75rem] w-auto max-w-[16rem] object-contain"
-                }
-              />
-            </div>
+            <header className="flex items-center gap-[1.125rem] max-[380px]:flex-col max-[380px]:items-start sm:gap-6">
+              <div
+                className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/12 transition duration-[350ms] group-hover:scale-[1.02] motion-reduce:group-hover:scale-100 sm:size-[72px]"
+                style={{
+                  padding: workshop.logoBox?.padding ?? "12px",
+                  background: workshop.logoBox?.background ?? "rgba(255,255,255,0.96)",
+                }}
+              >
+                <Image
+                  src={workshop.logo}
+                  alt={workshop.logoAlt}
+                  width={workshop.logo.includes("einc") ? 256 : 1024}
+                  height={workshop.logo.includes("einc") ? 256 : 502}
+                  quality={100}
+                  unoptimized
+                  className="h-auto w-auto max-h-full max-w-full object-contain"
+                />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold tracking-[0.18em] text-faint uppercase">
+                  {workshop.audience}
+                </p>
+                <h3 className="mt-1.5 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
+                  {workshop.title}
+                </h3>
+              </div>
+            </header>
 
-            <div className="flex flex-1 flex-col px-8 py-9 sm:px-10 sm:py-10">
-              <p className="text-xs font-semibold tracking-[0.18em] text-faint uppercase">
-                {workshop.audience}
-              </p>
-              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
-                {workshop.title}
-              </h3>
-              <p className="mt-5 text-base leading-relaxed text-muted">{workshop.description}</p>
-              <ul className="mt-9 flex flex-wrap gap-2">
-                {workshop.topics.map((topic) => (
-                  <li
-                    key={topic}
-                    className="rounded-full border border-white/[0.1] px-3.5 py-1.5 text-xs tracking-[0.02em] text-white/50 transition-colors group-hover:border-white/[0.18]"
-                  >
-                    {topic}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="mt-6 flex-1 text-base leading-relaxed text-muted">
+              {workshop.description}
+            </p>
+            <ul className="mt-8 flex flex-wrap gap-2">
+              {workshop.topics.map((topic) => (
+                <li
+                  key={topic}
+                  className="rounded-full border border-white/10 px-3.5 py-1.5 text-xs tracking-[0.02em] text-white/50 transition-colors duration-[350ms] group-hover:border-white/20"
+                >
+                  {topic}
+                </li>
+              ))}
+            </ul>
           </Reveal>
         ))}
       </div>

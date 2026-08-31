@@ -17,6 +17,13 @@ export type ProcessStep = {
   description: string;
 };
 
+export type WorkshopLogoBox = {
+  /** Inner padding around the mark. Default is 12px. */
+  padding?: string;
+  /** Square background. Default is off-white for contrast. */
+  background?: string;
+};
+
 export type Workshop = {
   audience: string;
   title: string;
@@ -24,6 +31,7 @@ export type Workshop = {
   topics: string[];
   logo: string;
   logoAlt: string;
+  logoBox?: WorkshopLogoBox;
 };
 
 export type GalleryPhoto = {
