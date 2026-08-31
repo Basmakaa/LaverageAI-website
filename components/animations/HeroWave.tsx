@@ -4,41 +4,56 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useId } from "react";
 
 /**
- * Ten Y samples / three cubics. Every keyframe is the same sine, only the
- * phase shifts, so the line stays a rounded wave instead of folding into kinks.
+ * Cubic Hermite sampling of a sine. Control points follow the derivative so
+ * crests stay rounded. Putting sine samples on the handles themselves is what
+ * produced the sharp V.
  */
-const SAMPLE_X = [-80, 200, 400, 600, 800, 1000, 1200, 1400, 1560, 1760] as const;
-const PHASES = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2, Math.PI * 2] as const;
+const START_X = -80;
+const SPAN = 1760;
+const SEGMENTS = 8;
+const KEYFRAMES = 8;
 const BASE_Y = 400;
-const AMPLITUDE = 88;
+const AMPLITUDE = 70;
 const MIRROR_AXIS = 508;
+const OMEGA = (Math.PI * 2) / SPAN;
 
 export const WAVE_DURATION = 24;
 const ease = "easeInOut" as const;
 
-function sineYs(phase: number, base: number, amp: number) {
-  return SAMPLE_X.map((x) => {
-    const t = (x / 1760) * Math.PI * 2 + phase;
-    return Math.round(base + Math.sin(t) * amp);
-  });
+function yAt(x: number, phase: number) {
+  return BASE_Y + AMPLITUDE * Math.sin(OMEGA * (x - START_X) + phase);
 }
 
-function pathFromYs(ys: number[]) {
-  return [
-    `M ${SAMPLE_X[0]} ${ys[0]}`,
-    `C ${SAMPLE_X[1]} ${ys[1]} ${SAMPLE_X[2]} ${ys[2]} ${SAMPLE_X[3]} ${ys[3]}`,
-    `C ${SAMPLE_X[4]} ${ys[4]} ${SAMPLE_X[5]} ${ys[5]} ${SAMPLE_X[6]} ${ys[6]}`,
-    `C ${SAMPLE_X[7]} ${ys[7]} ${SAMPLE_X[8]} ${ys[8]} ${SAMPLE_X[9]} ${ys[9]}`,
-  ].join(" ");
+function slopeAt(x: number, phase: number) {
+  return AMPLITUDE * OMEGA * Math.cos(OMEGA * (x - START_X) + phase);
 }
 
-function mirrorYs(ys: number[]) {
-  return ys.map((y) => MIRROR_AXIS * 2 - y);
+function wavePath(phase: number, mirror = false) {
+  const mapY = (y: number) => (mirror ? MIRROR_AXIS * 2 - y : y);
+  const xs = Array.from({ length: SEGMENTS + 1 }, (_, i) => START_X + (SPAN * i) / SEGMENTS);
+  const parts = [`M ${xs[0].toFixed(2)} ${mapY(yAt(xs[0], phase)).toFixed(2)}`];
+
+  for (let i = 0; i < SEGMENTS; i++) {
+    const x0 = xs[i];
+    const x1 = xs[i + 1];
+    const dx = (x1 - x0) / 3;
+    const y0 = yAt(x0, phase);
+    const y1 = yAt(x1, phase);
+    const c1y = y0 + slopeAt(x0, phase) * dx;
+    const c2y = y1 - slopeAt(x1, phase) * dx;
+    parts.push(
+      `C ${(x0 + dx).toFixed(2)} ${mapY(c1y).toFixed(2)} ${(x1 - dx).toFixed(2)} ${mapY(c2y).toFixed(2)} ${x1.toFixed(2)} ${mapY(y1).toFixed(2)}`,
+    );
+  }
+
+  return parts.join(" ");
 }
 
-const LINES = PHASES.map((phase) => pathFromYs(sineYs(phase, BASE_Y, AMPLITUDE)));
-const REFLECTIONS = PHASES.map((phase) =>
-  pathFromYs(mirrorYs(sineYs(phase, BASE_Y, AMPLITUDE))),
+const LINES = Array.from({ length: KEYFRAMES + 1 }, (_, i) =>
+  wavePath((i / KEYFRAMES) * Math.PI * 2),
+);
+const REFLECTIONS = Array.from({ length: KEYFRAMES + 1 }, (_, i) =>
+  wavePath((i / KEYFRAMES) * Math.PI * 2, true),
 );
 
 export function HeroWave() {
@@ -141,6 +156,7 @@ function WavePair({
         stroke="#ffffff"
         strokeWidth={glowWidth}
         strokeLinecap="round"
+        strokeLinejoin="round"
         strokeOpacity={glowOpacity}
         filter={glow}
       />
@@ -152,6 +168,7 @@ function WavePair({
         stroke="#ffffff"
         strokeWidth={coreWidth}
         strokeLinecap="round"
+        strokeLinejoin="round"
         strokeOpacity={coreOpacity}
         filter={core}
       />
