@@ -39,6 +39,5 @@ export type FaqItem = {
 export type Testimonial = {
   name: string;
   title: string;
-  rating: number;
   quote: string;
 };

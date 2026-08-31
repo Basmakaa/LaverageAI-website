@@ -144,16 +144,26 @@ export const testimonials: Testimonial[] = [
   {
     name: "Naimah Venezia",
     title: "3x Founder and PM at CoinWa",
-    rating: 5,
     quote:
       "I worked closely with Basma while creating the teaching materials for the AI workshop, and one of the most valuable parts of that experience was having her guidance throughout the process. As an experienced Software Engineer, she has a strong understanding of how AI works from a technical perspective, while also staying very up to date with new developments like AI agents and emerging tools. AI is evolving incredibly quickly, with new tools and capabilities coming out almost every day, so having someone who actively keeps up with these changes was extremely valuable. She was able to bring that knowledge into the workshop in a way that was practical and easy to understand. I would definitely recommend Basma to other teams and businesses, especially those looking for guidance from someone who understands both the technical side of AI and how the latest developments can actually be applied in the workplace.",
   },
   {
     name: "Prisha Dev",
     title: "Journalist and Co-founder FemmeInBusiness",
-    rating: 5,
     quote:
       "Basma did a phenomenal job at co hosting an AI for content creation workshop with us. The topics were engaging, insightful and informative. Her approach in guiding the workshop was clear and concise. The attendees genuinely enjoyed the session and took away lots of new info. I would 100% recommend to other teams and businesses.",
+  },
+  {
+    name: "Jamie Harris",
+    title: "VP People & Culture at E Inc",
+    quote:
+      "Everyone loved the AI session! I’ll definitely be connecting over the next few weeks to explore several initiatives, including a Policy Q&A chatbot, recruitment process automation, and talent management solutions.",
+  },
+  {
+    name: "Natalia Kuzma",
+    title: "Talent Acquisition Partner at E INC",
+    quote:
+      "Thank you Basma, that was amazing!! Thank you so much for your time and for explaining everything so clearly and simply 🩷🙏 Everyone is so excited!!",
   },
 ];
 

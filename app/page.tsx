@@ -1,3 +1,4 @@
+import { Anthropic } from "@/components/sections/Anthropic";
 import { Contact } from "@/components/sections/Contact";
 import { FAQ } from "@/components/sections/FAQ";
 import { Feedback } from "@/components/sections/Feedback";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Anthropic />
       <Industries />
       <Services />
       <Process />
