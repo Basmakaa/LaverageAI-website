@@ -16,8 +16,8 @@ export function Anthropic() {
       </p>
 
       <Reveal className="shell relative">
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <div className="relative h-[7.5rem] w-[12.5rem] overflow-hidden rounded-2xl sm:h-[8.75rem] sm:w-[14.5rem]">
+        <div className="mx-auto flex max-w-3xl flex-col items-start gap-10 text-left lg:max-w-5xl lg:flex-row lg:items-center">
+          <div className="relative h-[7.5rem] w-[12.5rem] shrink-0 overflow-hidden rounded-2xl sm:h-[8.75rem] sm:w-[14.5rem]">
             <Image
               src="/logos/anthropic.png"
               alt="Anthropic"
@@ -29,17 +29,19 @@ export function Anthropic() {
             />
           </div>
 
-          <p className="mt-10 text-xs font-semibold tracking-[0.18em] text-faint uppercase">
-            Trusted expertise
-          </p>
-          <h2 className="mt-4 text-3xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-5xl">
-            Selected by <span className="text-white/40">Anthropic</span>
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-            LaverageAI was selected for Anthropic’s 2026 Claude SMB Trainer Program in New York
-            City, receiving direct training to help businesses adopt Claude, improve workflows,
-            increase productivity, and implement AI responsibly.
-          </p>
+          <div>
+            <p className="text-xs font-semibold tracking-[0.18em] text-faint uppercase">
+              Trusted expertise
+            </p>
+            <h2 className="mt-4 text-3xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-5xl">
+              Selected by <span className="text-white/40">Anthropic</span>
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+              LaverageAI was selected for Anthropic’s 2026 Claude SMB Trainer Program in New York
+              City, receiving direct training to help businesses adopt Claude, improve workflows,
+              increase productivity, and implement AI responsibly.
+            </p>
+          </div>
         </div>
       </Reveal>
     </section>
