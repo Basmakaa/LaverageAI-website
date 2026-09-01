@@ -1,37 +1,63 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useId, useState } from "react";
+
 /**
- * Static sine tiles that slide on the compositor thread.
- * Morphing SVG path `d` plus multiple feGaussianBlur filters is what made
- * the previous version janky on mobile and expensive on first paint.
+ * Cubic Hermite sampling of a sine. Control points follow the derivative so
+ * crests stay rounded. Putting sine samples on the handles themselves is what
+ * produced the sharp V.
  */
 const START_X = -80;
 const SPAN = 1760;
 const SEGMENTS = 8;
+const KEYFRAMES = 16;
 const BASE_Y = 218;
 const AMPLITUDE = 70;
 const MIRROR_AXIS = 431;
 const OMEGA = (Math.PI * 2) / SPAN;
 
-function yAt(x: number) {
-  return BASE_Y + AMPLITUDE * Math.sin(OMEGA * (x - START_X));
+export const WAVE_DURATION = 26;
+const MOBILE_DURATION = 8;
+const ease = "linear" as const;
+
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 767px)");
+    const sync = () => setMobile(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  return mobile;
 }
 
-function slopeAt(x: number) {
-  return AMPLITUDE * OMEGA * Math.cos(OMEGA * (x - START_X));
+function yAt(x: number, phase: number) {
+  return BASE_Y + AMPLITUDE * Math.sin(OMEGA * (x - START_X) + phase);
 }
 
-function wavePath(mirror = false) {
+function slopeAt(x: number, phase: number) {
+  return AMPLITUDE * OMEGA * Math.cos(OMEGA * (x - START_X) + phase);
+}
+
+function wavePath(phase: number, mirror = false, periods = 1) {
+  const span = SPAN * periods;
+  const segments = SEGMENTS * periods;
   const mapY = (y: number) => (mirror ? MIRROR_AXIS * 2 - y : y);
-  const xs = Array.from({ length: SEGMENTS + 1 }, (_, i) => START_X + (SPAN * i) / SEGMENTS);
-  const parts = [`M ${xs[0].toFixed(2)} ${mapY(yAt(xs[0])).toFixed(2)}`];
+  const xs = Array.from({ length: segments + 1 }, (_, i) => START_X + (span * i) / segments);
+  const parts = [`M ${xs[0].toFixed(2)} ${mapY(yAt(xs[0], phase)).toFixed(2)}`];
 
-  for (let i = 0; i < SEGMENTS; i++) {
+  for (let i = 0; i < segments; i++) {
     const x0 = xs[i];
     const x1 = xs[i + 1];
     const dx = (x1 - x0) / 3;
-    const y0 = yAt(x0);
-    const y1 = yAt(x1);
-    const c1y = y0 + slopeAt(x0) * dx;
-    const c2y = y1 - slopeAt(x1) * dx;
+    const y0 = yAt(x0, phase);
+    const y1 = yAt(x1, phase);
+    const c1y = y0 + slopeAt(x0, phase) * dx;
+    const c2y = y1 - slopeAt(x1, phase) * dx;
     parts.push(
       `C ${(x0 + dx).toFixed(2)} ${mapY(c1y).toFixed(2)} ${(x1 - dx).toFixed(2)} ${mapY(c2y).toFixed(2)} ${x1.toFixed(2)} ${mapY(y1).toFixed(2)}`,
     );
@@ -40,32 +66,207 @@ function wavePath(mirror = false) {
   return parts.join(" ");
 }
 
-const LINE = wavePath(false);
-const REFLECTION = wavePath(true);
+const LINES = Array.from({ length: KEYFRAMES + 1 }, (_, i) =>
+  wavePath((i / KEYFRAMES) * Math.PI * 2),
+);
+const REFLECTIONS = Array.from({ length: KEYFRAMES + 1 }, (_, i) =>
+  wavePath((i / KEYFRAMES) * Math.PI * 2, true),
+);
+const LINE_SLIDE = wavePath(0, false, 2);
+const REFLECTION_SLIDE = wavePath(0, true, 2);
 
 export function HeroWave() {
+  const reduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const id = useId();
+  const sides = `${id}-sides`;
+  const mask = `${id}-mask`;
+  const reflectionMask = `${id}-reflection`;
+  const fadeDown = `${id}-fade-down`;
+  const bloom = `${id}-bloom`;
+  const bloomMask = `${id}-bloom-mask`;
+  const glow = `${id}-glow`;
+  const bend = `${id}-bend`;
+  const core = `${id}-core`;
+  const reflectionGlow = `${id}-ref-glow`;
+  const reflectionCore = `${id}-ref-core`;
+
   return (
-    <div aria-hidden="true" className="hero-wave pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="hero-wave-track">
-        <WaveTile />
-        <WaveTile />
-      </div>
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_100%)]"
+    >
+      <svg
+        viewBox="0 0 1600 900"
+        className="absolute inset-0 h-full w-full"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <linearGradient id={sides} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#fff" stopOpacity="0" />
+            <stop offset="14%" stopColor="#fff" stopOpacity="1" />
+            <stop offset="86%" stopColor="#fff" stopOpacity="1" />
+            <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id={fadeDown} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+            <stop offset="0.5" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.58" stopColor="#fff" stopOpacity="0.35" />
+            <stop offset="0.68" stopColor="#fff" stopOpacity="1" />
+            <stop offset="0.8" stopColor="#fff" stopOpacity="0.35" />
+            <stop offset="0.92" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id={bloom} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.12" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.2" stopColor="#fff" stopOpacity="0.55" />
+            <stop offset="0.26" stopColor="#fff" stopOpacity="1" />
+            <stop offset="0.34" stopColor="#fff" stopOpacity="0.4" />
+            <stop offset="0.46" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <mask id={mask}>
+            <rect width="1600" height="900" fill={`url(#${sides})`} />
+          </mask>
+          <mask id={bloomMask}>
+            <rect width="1600" height="900" fill={`url(#${bloom})`} />
+          </mask>
+          <mask id={reflectionMask}>
+            <rect width="1600" height="900" fill={`url(#${fadeDown})`} />
+          </mask>
+          <filter id={glow} x="-16%" y="-120%" width="132%" height="340%">
+            <feGaussianBlur stdDeviation="42" />
+          </filter>
+          <filter id={bend} x="-10%" y="-70%" width="120%" height="240%">
+            <feGaussianBlur stdDeviation="14" />
+          </filter>
+          <filter id={core} x="-6%" y="-40%" width="112%" height="180%">
+            <feGaussianBlur stdDeviation="4" />
+          </filter>
+          <filter id={reflectionGlow} x="-18%" y="-140%" width="136%" height="380%">
+            <feGaussianBlur stdDeviation="56" />
+          </filter>
+          <filter id={reflectionCore} x="-10%" y="-80%" width="120%" height="260%">
+            <feGaussianBlur stdDeviation="16" />
+          </filter>
+        </defs>
+
+        <g mask={`url(#${mask})`}>
+          <g mask={`url(#${bloomMask})`}>
+            <WavePair
+              paths={isMobile ? [LINE_SLIDE] : LINES}
+              reduceMotion={!!reduceMotion}
+              slide={isMobile}
+              glow={`url(#${glow})`}
+              bend={`url(#${bend})`}
+              core={`url(#${core})`}
+              glowWidth={56}
+              glowOpacity={0.16}
+              bendWidth={22}
+              bendOpacity={0.38}
+              coreWidth={11}
+              coreOpacity={0.95}
+            />
+          </g>
+          <g mask={`url(#${reflectionMask})`}>
+            <WavePair
+              paths={isMobile ? [REFLECTION_SLIDE] : REFLECTIONS}
+              reduceMotion={!!reduceMotion}
+              slide={isMobile}
+              glow={`url(#${reflectionGlow})`}
+              core={`url(#${reflectionCore})`}
+              glowWidth={48}
+              glowOpacity={0.14}
+              coreWidth={8}
+              coreOpacity={0.34}
+            />
+          </g>
+        </g>
+      </svg>
     </div>
   );
 }
 
-function WaveTile() {
+function WavePair({
+  paths,
+  reduceMotion,
+  slide = false,
+  glow,
+  bend,
+  core,
+  glowWidth,
+  glowOpacity,
+  bendWidth,
+  bendOpacity,
+  coreWidth,
+  coreOpacity,
+}: {
+  paths: string[];
+  reduceMotion: boolean;
+  slide?: boolean;
+  glow: string;
+  bend?: string;
+  core: string;
+  glowWidth: number;
+  glowOpacity: number;
+  bendWidth?: number;
+  bendOpacity?: number;
+  coreWidth: number;
+  coreOpacity: number;
+}) {
+  const motionProps = {
+    animate: reduceMotion || slide ? undefined : { d: paths },
+    transition: { duration: WAVE_DURATION, ease, repeat: Infinity },
+  };
+
+  const strokes = (
+    <>
+      <motion.path
+        d={paths[0]}
+        {...motionProps}
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth={glowWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeOpacity={glowOpacity}
+        filter={glow}
+      />
+      {bend && bendWidth ? (
+        <motion.path
+          d={paths[0]}
+          {...motionProps}
+          fill="none"
+          stroke="#ffffff"
+          strokeWidth={bendWidth}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={bendOpacity}
+          filter={bend}
+        />
+      ) : null}
+      <motion.path
+        d={paths[0]}
+        {...motionProps}
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth={coreWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeOpacity={coreOpacity}
+        filter={core}
+      />
+    </>
+  );
+
+  if (!slide) {
+    return strokes;
+  }
+
   return (
-    <svg
-      viewBox="0 0 1600 900"
-      className="hero-wave-tile"
-      preserveAspectRatio="xMidYMid slice"
+    <motion.g
+      animate={reduceMotion ? undefined : { x: [0, -SPAN] }}
+      transition={{ duration: MOBILE_DURATION, ease: "linear", repeat: Infinity }}
     >
-      <path d={REFLECTION} className="hero-wave-reflection-glow" />
-      <path d={REFLECTION} className="hero-wave-reflection-core" />
-      <path d={LINE} className="hero-wave-glow" />
-      <path d={LINE} className="hero-wave-bend" />
-      <path d={LINE} className="hero-wave-core" />
-    </svg>
+      {strokes}
+    </motion.g>
   );
 }
