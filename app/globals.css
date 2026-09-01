@@ -110,6 +110,48 @@
   animation: marquee 34s linear infinite;
 }
 
+/* Mobile hero wave only. Period is 1760 user units in a 1600 viewBox, so the
+   second tile starts at 110% and the track is 210% wide. Desktop is unchanged. */
+.hero-wave-mobile {
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 18%, #000 100%),
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 18%, #000 100%),
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+}
+
+.hero-wave-mobile-track {
+  display: flex;
+  height: 100%;
+  width: 210%;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.hero-wave-mobile-track-move {
+  animation: hero-wave-mobile-slide 26s linear infinite;
+  will-change: transform;
+}
+
+.hero-wave-mobile-tile {
+  display: block;
+  flex: 0 0 calc(100% / 2.1);
+  height: 100%;
+}
+
+.hero-wave-mobile-tile + .hero-wave-mobile-tile {
+  margin-left: calc(10% / 2.1);
+}
+
+@keyframes hero-wave-mobile-slide {
+  to {
+    transform: translate3d(-52.380952%, 0, 0);
+  }
+}
+
 /* Keep the Calendly iframe from painting an opaque white canvas on this dark page. */
 .calendly-inline-widget iframe {
   color-scheme: light;

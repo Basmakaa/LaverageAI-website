@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useId, useState } from "react";
+import { useId, useLayoutEffect, useState } from "react";
 
 /**
  * Cubic Hermite sampling of a sine. Control points follow the derivative so
@@ -16,15 +16,15 @@ const BASE_Y = 218;
 const AMPLITUDE = 70;
 const MIRROR_AXIS = 431;
 const OMEGA = (Math.PI * 2) / SPAN;
+const VIEWBOX_WIDTH = 1600;
 
 export const WAVE_DURATION = 26;
-const MOBILE_DURATION = 8;
 const ease = "linear" as const;
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const query = window.matchMedia("(max-width: 767px)");
     const sync = () => setMobile(query.matches);
     sync();
@@ -43,14 +43,12 @@ function slopeAt(x: number, phase: number) {
   return AMPLITUDE * OMEGA * Math.cos(OMEGA * (x - START_X) + phase);
 }
 
-function wavePath(phase: number, mirror = false, periods = 1) {
-  const span = SPAN * periods;
-  const segments = SEGMENTS * periods;
+function wavePath(phase: number, mirror = false) {
   const mapY = (y: number) => (mirror ? MIRROR_AXIS * 2 - y : y);
-  const xs = Array.from({ length: segments + 1 }, (_, i) => START_X + (span * i) / segments);
+  const xs = Array.from({ length: SEGMENTS + 1 }, (_, i) => START_X + (SPAN * i) / SEGMENTS);
   const parts = [`M ${xs[0].toFixed(2)} ${mapY(yAt(xs[0], phase)).toFixed(2)}`];
 
-  for (let i = 0; i < segments; i++) {
+  for (let i = 0; i < SEGMENTS; i++) {
     const x0 = xs[i];
     const x1 = xs[i + 1];
     const dx = (x1 - x0) / 3;
@@ -72,12 +70,19 @@ const LINES = Array.from({ length: KEYFRAMES + 1 }, (_, i) =>
 const REFLECTIONS = Array.from({ length: KEYFRAMES + 1 }, (_, i) =>
   wavePath((i / KEYFRAMES) * Math.PI * 2, true),
 );
-const LINE_SLIDE = wavePath(0, false, 2);
-const REFLECTION_SLIDE = wavePath(0, true, 2);
 
 export function HeroWave() {
   const reduceMotion = useReducedMotion();
   const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return <HeroWaveMobile reduceMotion={!!reduceMotion} />;
+  }
+
+  return <HeroWaveDesktop reduceMotion={!!reduceMotion} />;
+}
+
+function HeroWaveDesktop({ reduceMotion }: { reduceMotion: boolean }) {
   const id = useId();
   const sides = `${id}-sides`;
   const mask = `${id}-mask`;
@@ -152,9 +157,8 @@ export function HeroWave() {
         <g mask={`url(#${mask})`}>
           <g mask={`url(#${bloomMask})`}>
             <WavePair
-              paths={isMobile ? [LINE_SLIDE] : LINES}
-              reduceMotion={!!reduceMotion}
-              slide={isMobile}
+              paths={LINES}
+              reduceMotion={reduceMotion}
               glow={`url(#${glow})`}
               bend={`url(#${bend})`}
               core={`url(#${core})`}
@@ -168,9 +172,8 @@ export function HeroWave() {
           </g>
           <g mask={`url(#${reflectionMask})`}>
             <WavePair
-              paths={isMobile ? [REFLECTION_SLIDE] : REFLECTIONS}
-              reduceMotion={!!reduceMotion}
-              slide={isMobile}
+              paths={REFLECTIONS}
+              reduceMotion={reduceMotion}
               glow={`url(#${reflectionGlow})`}
               core={`url(#${reflectionCore})`}
               glowWidth={48}
@@ -188,7 +191,6 @@ export function HeroWave() {
 function WavePair({
   paths,
   reduceMotion,
-  slide = false,
   glow,
   bend,
   core,
@@ -201,7 +203,6 @@ function WavePair({
 }: {
   paths: string[];
   reduceMotion: boolean;
-  slide?: boolean;
   glow: string;
   bend?: string;
   core: string;
@@ -213,11 +214,11 @@ function WavePair({
   coreOpacity: number;
 }) {
   const motionProps = {
-    animate: reduceMotion || slide ? undefined : { d: paths },
+    animate: reduceMotion ? undefined : { d: paths },
     transition: { duration: WAVE_DURATION, ease, repeat: Infinity },
   };
 
-  const strokes = (
+  return (
     <>
       <motion.path
         d={paths[0]}
@@ -256,17 +257,140 @@ function WavePair({
       />
     </>
   );
+}
 
-  if (!slide) {
-    return strokes;
-  }
+/**
+ * Same wave, glow, and 26s cycle as desktop. A phase shift of this sine is a
+ * horizontal slide, so we paint the strokes once and move them on the GPU.
+ */
+function HeroWaveMobile({ reduceMotion }: { reduceMotion: boolean }) {
+  const id = useId();
 
   return (
-    <motion.g
-      animate={reduceMotion ? undefined : { x: [0, -SPAN] }}
-      transition={{ duration: MOBILE_DURATION, ease: "linear", repeat: Infinity }}
+    <div aria-hidden="true" className="hero-wave-mobile pointer-events-none absolute inset-0 overflow-hidden">
+      <div className={reduceMotion ? "hero-wave-mobile-track" : "hero-wave-mobile-track hero-wave-mobile-track-move"}>
+        <MobileTile id={`${id}-a`} />
+        <MobileTile id={`${id}-b`} />
+      </div>
+    </div>
+  );
+}
+
+function MobileTile({ id }: { id: string }) {
+  const reflectionMask = `${id}-reflection`;
+  const fadeDown = `${id}-fade-down`;
+  const bloom = `${id}-bloom`;
+  const bloomMask = `${id}-bloom-mask`;
+  const glow = `${id}-glow`;
+  const bend = `${id}-bend`;
+  const core = `${id}-core`;
+  const reflectionGlow = `${id}-ref-glow`;
+  const reflectionCore = `${id}-ref-core`;
+  const line = LINES[0];
+  const reflection = REFLECTIONS[0];
+
+  return (
+    <svg
+      viewBox={`0 0 ${VIEWBOX_WIDTH} 900`}
+      className="hero-wave-mobile-tile"
+      preserveAspectRatio="xMidYMid slice"
+      overflow="visible"
     >
-      {strokes}
-    </motion.g>
+      <defs>
+        <linearGradient id={fadeDown} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+          <stop offset="0.5" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.58" stopColor="#fff" stopOpacity="0.35" />
+          <stop offset="0.68" stopColor="#fff" stopOpacity="1" />
+          <stop offset="0.8" stopColor="#fff" stopOpacity="0.35" />
+          <stop offset="0.92" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id={bloom} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.12" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.2" stopColor="#fff" stopOpacity="0.55" />
+          <stop offset="0.26" stopColor="#fff" stopOpacity="1" />
+          <stop offset="0.34" stopColor="#fff" stopOpacity="0.4" />
+          <stop offset="0.46" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <mask id={bloomMask}>
+          <rect width="1600" height="900" fill={`url(#${bloom})`} />
+        </mask>
+        <mask id={reflectionMask}>
+          <rect width="1600" height="900" fill={`url(#${fadeDown})`} />
+        </mask>
+        <filter id={glow} x="-16%" y="-120%" width="132%" height="340%">
+          <feGaussianBlur stdDeviation="42" />
+        </filter>
+        <filter id={bend} x="-10%" y="-70%" width="120%" height="240%">
+          <feGaussianBlur stdDeviation="14" />
+        </filter>
+        <filter id={core} x="-6%" y="-40%" width="112%" height="180%">
+          <feGaussianBlur stdDeviation="4" />
+        </filter>
+        <filter id={reflectionGlow} x="-18%" y="-140%" width="136%" height="380%">
+          <feGaussianBlur stdDeviation="56" />
+        </filter>
+        <filter id={reflectionCore} x="-10%" y="-80%" width="120%" height="260%">
+          <feGaussianBlur stdDeviation="16" />
+        </filter>
+      </defs>
+
+      <g>
+        <g mask={`url(#${bloomMask})`}>
+          <path
+            d={line}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={56}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={0.16}
+            filter={`url(#${glow})`}
+          />
+          <path
+            d={line}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={22}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={0.38}
+            filter={`url(#${bend})`}
+          />
+          <path
+            d={line}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={11}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={0.95}
+            filter={`url(#${core})`}
+          />
+        </g>
+        <g mask={`url(#${reflectionMask})`}>
+          <path
+            d={reflection}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={48}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={0.14}
+            filter={`url(#${reflectionGlow})`}
+          />
+          <path
+            d={reflection}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={8}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={0.34}
+            filter={`url(#${reflectionCore})`}
+          />
+        </g>
+      </g>
+    </svg>
   );
 }
