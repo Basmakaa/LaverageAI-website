@@ -37,9 +37,10 @@ export function Anthropic() {
               Selected by <span className="text-white/40">Anthropic</span>
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-              LaverageAI was selected for Anthropic’s 2026 Claude SMB Trainer Program in New York
-              City, receiving direct training to help businesses adopt Claude, improve workflows,
-              increase productivity, and implement AI responsibly.
+              LaverageAI is an approved Anthropic SMB organization, selected for Anthropic’s 2026
+              Claude SMB Trainer Program in New York City, receiving direct training to help
+              businesses adopt Claude, improve workflows, increase productivity, and implement AI
+              responsibly.
             </p>
           </div>
         </div>
