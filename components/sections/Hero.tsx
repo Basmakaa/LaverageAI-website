@@ -5,7 +5,6 @@ import { ButtonLink } from "@/components/ui/Button";
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink pt-40 pb-24 sm:pt-48 sm:pb-32">
-      <div className="hero-grid animate-drift absolute inset-0" aria-hidden="true" />
       <HeroWave />
 
       <div className="shell relative z-10">
@@ -20,10 +19,10 @@ export function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <ButtonLink href="#calendar" className="w-full sm:w-auto">
+            <ButtonLink href="/#calendar" className="w-full sm:w-auto">
               Book a Free Discovery Call
             </ButtonLink>
-            <ButtonLink href="#contact" variant="secondary" className="w-full sm:w-auto">
+            <ButtonLink href="/#contact" variant="secondary" className="w-full sm:w-auto">
               Contact Us
             </ButtonLink>
           </div>

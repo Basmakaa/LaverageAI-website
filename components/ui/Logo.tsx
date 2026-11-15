@@ -16,7 +16,7 @@ export function Logo({ compact = false, className }: LogoProps) {
         height={72}
         quality={100}
         unoptimized
-        className="h-9 w-9 shrink-0 rounded-md"
+        className="h-9 w-9 shrink-0"
         priority
       />
       {!compact && (

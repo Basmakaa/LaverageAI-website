@@ -10,7 +10,7 @@ export function CalendlyEmbed() {
   return (
     <>
       <div
-        className="calendly-inline-widget min-h-[720px] overflow-hidden rounded-2xl border border-line bg-card"
+        className="calendly-inline-widget min-h-[720px] overflow-hidden border border-line bg-card"
         data-url={embedUrl}
         style={{ minWidth: "320px", height: "720px" }}
       />

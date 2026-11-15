@@ -1,7 +1,6 @@
 "use client";
 
 import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -127,7 +126,7 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
                 {pagePhotos.map((photo) => (
                   <figure
                     key={photo.src}
-                    className="min-w-0 overflow-hidden rounded-2xl border border-line bg-card"
+                    className="group/photo min-w-0 overflow-hidden border border-line bg-card"
                     style={{
                       flex: `0 0 calc((100% - ${(visible - 1) * 1}rem) / ${visible})`,
                     }}
@@ -141,7 +140,7 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
                       unoptimized
                       sizes="(min-width: 768px) 33vw, 92vw"
                       draggable={false}
-                      className="aspect-[3/4] h-full w-full object-cover"
+                      className="aspect-[3/4] h-full w-full object-cover transition duration-700 ease-out group-hover/photo:scale-[1.04]"
                     />
                   </figure>
                 ))}
@@ -157,14 +156,14 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
               onClick={() => goTo(page - 1)}
               className="absolute top-1/2 left-3 z-10 -translate-y-1/2 max-md:hidden"
             >
-              <ChevronLeft className="size-5" strokeWidth={1.75} />
+              Prev
             </CarouselButton>
             <CarouselButton
               label="Next photos"
               onClick={() => goTo(page + 1)}
               className="absolute top-1/2 right-3 z-10 -translate-y-1/2 max-md:hidden"
             >
-              <ChevronRight className="size-5" strokeWidth={1.75} />
+              Next
             </CarouselButton>
           </>
         ) : null}
@@ -177,7 +176,7 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
             onClick={() => goTo(page - 1)}
             className="md:hidden"
           >
-            <ChevronLeft className="size-5" strokeWidth={1.75} />
+            Prev
           </CarouselButton>
 
           <div className="flex items-center gap-2" role="tablist" aria-label="Gallery pages">
@@ -191,7 +190,7 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
                   aria-selected={active}
                   aria-label={`Show photos ${i * visible + 1} to ${Math.min((i + 1) * visible, photos.length)}`}
                   onClick={() => goTo(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                  className={`h-1.5 ${
                     active ? "w-6 bg-white" : "w-1.5 bg-white/25 hover:bg-white/45"
                   }`}
                 />
@@ -204,7 +203,7 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
             onClick={() => goTo(page + 1)}
             className="md:hidden"
           >
-            <ChevronRight className="size-5" strokeWidth={1.75} />
+            Next
           </CarouselButton>
         </div>
       ) : null}
@@ -233,7 +232,7 @@ function CarouselButton({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className={`inline-flex size-11 items-center justify-center rounded-full border border-line bg-[#111111]/90 text-fg shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:bg-white/[0.08] ${className ?? ""}`}
+      className={`inline-flex h-11 items-center justify-center border border-line bg-ink px-3 text-sm text-fg hover:border-line-strong ${className ?? ""}`}
     >
       {children}
     </button>

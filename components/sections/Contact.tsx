@@ -9,12 +9,7 @@ export function Contact() {
       id="contact"
       className="relative scroll-mt-28 overflow-hidden border-t border-line py-section-sm sm:py-section"
     >
-      <div
-        aria-hidden="true"
-        className="glow-ellipse pointer-events-none absolute top-[-14rem] right-[-14rem] h-[32rem] w-[48rem]"
-      />
-
-      <div className="shell relative grid gap-14 lg:grid-cols-[1fr_0.85fr] lg:gap-24">
+      <div className="shell relative grid gap-14 lg:grid-cols-[1fr_0.9fr] lg:gap-24">
         <Reveal>
           <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">Start here</p>
           <h2 className="mt-5 text-4xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-5xl lg:text-6xl">
@@ -26,32 +21,29 @@ export function Contact() {
           </p>
 
           <dl className="mt-12">
-            <dt className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-              Email
-            </dt>
+            <dt className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">Email</dt>
             <dd className="mt-2">
-              <a href={`mailto:${site.email}`} className="text-lg transition-colors hover:text-white/80">
+              <a href={`mailto:${site.email}`} className="link-underline pb-0.5 text-lg hover:text-white">
                 {site.email}
               </a>
             </dd>
           </dl>
         </Reveal>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.08}>
           <ContactForm />
         </Reveal>
       </div>
 
       <div id="calendar" className="shell relative mt-16 scroll-mt-28 sm:mt-20">
         <Reveal>
-          <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">
-            Book a time
-          </p>
+          <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">Book a time</p>
           <h3 className="mt-4 text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
             Or pick a slot for a free discovery call
           </h3>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-muted">
-            Choose a time that works. The calendar is on this page, so there is no need to leave the site.
+            Choose a time that works. The calendar is on this page, so there is no need to leave the
+            site.
           </p>
         </Reveal>
         <div className="mt-8">

@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/animations/Reveal";
+import { ProcessTrack } from "@/components/sections/ProcessTrack";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { processSteps } from "@/lib/content";
 
@@ -15,24 +16,30 @@ export function Process() {
         description="The goal is not to add more tools. It is to make your team more capable and your everyday work measurably easier."
       />
 
-      <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4">
+      <ProcessTrack>
         {processSteps.map((step, i) => (
           <Reveal
             key={step.step}
             as="li"
-            delay={i * 0.08}
-            className="group relative bg-ink p-8 transition-colors duration-300 hover:bg-card lg:min-h-72"
+            delay={i * 0.06}
+            className="group relative pb-14 last:pb-0"
           >
-            <span className="text-xs font-semibold tracking-[0.16em] text-faint">{step.step}</span>
-            <h3 className="mt-10 text-2xl font-semibold tracking-[-0.03em]">{step.title}</h3>
-            <p className="mt-4 text-sm leading-relaxed text-muted">{step.description}</p>
-            <span
-              aria-hidden="true"
-              className="absolute right-8 bottom-8 left-8 h-px origin-left scale-x-0 bg-white/50 transition-transform duration-500 group-hover:scale-x-100"
-            />
+            <div className="grid grid-cols-[2.3rem_1fr] items-start gap-5 sm:grid-cols-[3.3rem_1fr] sm:gap-8">
+              <span className="relative z-10 grid size-9 place-items-center bg-ink text-sm font-semibold text-faint transition-colors duration-300 group-hover:text-fg sm:size-11 sm:text-base">
+                {step.step}
+              </span>
+              <div className="pt-1">
+                <h3 className="text-3xl font-semibold tracking-[-0.03em] transition-colors duration-300 group-hover:text-white sm:text-4xl">
+                  {step.title}
+                </h3>
+                <p className="mt-3 max-w-xl text-base leading-relaxed text-muted transition-colors duration-300 group-hover:text-white/80">
+                  {step.description}
+                </p>
+              </div>
+            </div>
           </Reveal>
         ))}
-      </ol>
+      </ProcessTrack>
     </section>
   );
 }

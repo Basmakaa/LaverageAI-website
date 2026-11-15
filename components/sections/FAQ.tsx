@@ -1,7 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
 import { useId, useState } from "react";
 
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -38,33 +36,24 @@ export function FAQ() {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-8 py-6 text-left text-lg font-medium tracking-[-0.02em] transition-colors hover:text-white/80 sm:text-xl"
+                  className="flex w-full items-baseline justify-between gap-8 py-6 text-left text-lg font-medium tracking-[-0.02em] transition-colors duration-300 hover:text-white sm:text-xl"
                 >
                   {faq.question}
                   <span className="shrink-0 text-faint" aria-hidden="true">
-                    {isOpen ? <Minus size={20} /> : <Plus size={20} />}
+                    {isOpen ? "−" : "+"}
                   </span>
                 </button>
               </h3>
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    key="panel"
-                    id={panelId}
-                    role="region"
-                    aria-labelledby={buttonId}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.22, 0.75, 0.2, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <p className="max-w-3xl pb-7 text-base leading-relaxed text-muted">
-                      {faq.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isOpen ? (
+                <p
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  className="max-w-3xl pb-7 text-base leading-relaxed text-muted"
+                >
+                  {faq.answer}
+                </p>
+              ) : null}
             </div>
           );
         })}

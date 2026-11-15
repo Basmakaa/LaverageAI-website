@@ -1,13 +1,12 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
 import { useId, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { site } from "@/lib/site";
 
 const fieldClass =
-  "w-full rounded-xl border border-line bg-surface px-4 py-3 text-sm text-fg transition-colors placeholder:text-white/25 focus:border-line-strong focus:outline-none";
+  "w-full rounded-sm border border-line bg-ink px-4 py-3 text-sm text-fg placeholder:text-white/25 focus:border-line-strong focus:outline-none";
 
 const labelClass = "text-xs font-semibold tracking-[0.12em] text-faint uppercase";
 
@@ -103,7 +102,7 @@ export function ContactForm() {
     return (
       <div
         role="status"
-        className="grid min-h-[28rem] content-center gap-4 rounded-2xl border border-line bg-card p-6 sm:p-8"
+        className="grid min-h-[28rem] content-center gap-4 border border-line p-6 sm:p-8"
       >
         <p className="text-xs font-semibold tracking-[0.16em] text-faint uppercase">Message received</p>
         <h3 className="text-2xl font-semibold tracking-[-0.03em] text-balance sm:text-3xl">
@@ -120,7 +119,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid gap-5 rounded-2xl border border-line bg-card p-6 sm:p-8"
+      className="grid gap-5 border border-line p-6 sm:p-8"
     >
       <div className="hidden" aria-hidden="true">
         <label htmlFor={`${id}-website`}>Website</label>
@@ -186,7 +185,6 @@ export function ContactForm() {
 
       <Button type="submit" disabled={status === "sending"} className="w-full sm:w-max">
         {status === "sending" ? "Sending…" : "Send Message"}
-        {status !== "sending" && <ArrowUpRight size={16} />}
       </Button>
 
       <p aria-live="polite" className="text-xs text-faint">

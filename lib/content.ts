@@ -1,84 +1,60 @@
-import {
-  Bot,
-  BookOpen,
-  Compass,
-  Gauge,
-  GraduationCap,
-  LineChart,
-  Rocket,
-  Workflow,
-} from "lucide-react";
-
 import type { FaqItem, GalleryPhoto, NavLink, ProcessStep, Service, Testimonial, Workshop } from "@/types";
 
 export const navLinks: NavLink[] = [
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Workshops", href: "#workshops" },
-  { label: "Feedback", href: "#feedback" },
-  { label: "Contact", href: "#contact" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Services", href: "/#services" },
+  { label: "Process", href: "/#process" },
+  { label: "Workshops", href: "/#workshops" },
+  { label: "Feedback", href: "/#feedback" },
+  { label: "Contact", href: "/#contact" },
+  { label: "FAQ", href: "/#faq" },
+];
+
+export const legalLinks: NavLink[] = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
 ];
 
 export const services: Service[] = [
   {
-    icon: Gauge,
     title: "AI Readiness Assessment",
     description:
       "We map how your team works today and show where AI will save the most time, with the least disruption.",
   },
   {
-    icon: GraduationCap,
     title: "AI Workshops",
     description:
       "Hands on sessions built around your team's real tasks, not generic prompting theory or tool demos.",
   },
   {
-    icon: BookOpen,
     title: "Claude & ChatGPT Training",
     description:
       "Role specific training that takes people from occasional use to confident, everyday practice.",
   },
   {
-    icon: Workflow,
     title: "Workflow Automation",
     description:
       "We connect AI to the tools you already use, so repetitive work runs reliably in the background.",
   },
   {
-    icon: Bot,
     title: "Custom AI Assistants",
     description:
       "Internal assistants configured around your business context, documents and ways of working.",
   },
   {
-    icon: Compass,
     title: "AI Strategy",
     description:
       "A clear, prioritised plan for where AI fits your business over the next quarter and the next year.",
   },
   {
-    icon: Rocket,
     title: "Implementation",
     description:
       "We build and deploy the workflows with your team, so adoption starts during the engagement.",
   },
   {
-    icon: LineChart,
     title: "Ongoing Advisory",
     description:
       "Office hours, workflow reviews and practical guidance as your team's AI maturity grows.",
   },
-];
-
-export const industries: string[] = [
-  "Marketing",
-  "HR",
-  "Operations",
-  "Leadership",
-  "Sales",
-  "Customer Support",
-  "Finance",
 ];
 
 export const processSteps: ProcessStep[] = [
@@ -186,7 +162,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What can LaverageAI help our team achieve?",
     answer:
-      "We help your team use AI to work more efficiently, reduce repetitive tasks, and improve everyday workflows. Before each session, we look for practical opportunities within your organization to save your team time and money—ensuring the training addresses real needs and delivers tangible value.",
+      "We help your team use AI to work more efficiently, reduce repetitive tasks, and improve everyday workflows. Before each session, we look for practical opportunities within your organization to save your team time and money, ensuring the training addresses real needs and delivers tangible value.",
   },
   {
     question: "Are your workshops customized to our business?",

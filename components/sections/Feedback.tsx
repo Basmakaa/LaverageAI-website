@@ -2,19 +2,10 @@ import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { testimonials } from "@/lib/content";
 
-const cardMotion = [
-  "md:-rotate-2 md:translate-y-0",
-  "md:rotate-2 md:translate-y-8",
-  "md:rotate-1 md:translate-y-4",
-  "md:-rotate-1 md:translate-y-10",
-];
-
 export function Feedback() {
   return (
-    <section id="feedback" className="relative scroll-mt-28 py-section-sm sm:py-section">
-      <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-
-      <div className="shell relative">
+    <section id="feedback" className="scroll-mt-28 py-section-sm sm:py-section">
+      <div className="shell">
         <SectionHeading
           eyebrow="Customer feedback"
           title={
@@ -25,17 +16,22 @@ export function Feedback() {
           description="Workshops and implementation, in their words. These are people who have sat in the room with us."
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 md:gap-x-8 md:gap-y-4 lg:gap-x-10">
+        <div className="mt-16 grid gap-16 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-20">
           {testimonials.map((item, i) => (
-            <Reveal
-              key={item.name}
-              as="article"
-              delay={i * 0.08}
-              className={`flex min-h-[22rem] flex-col rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] p-8 shadow-[0_24px_60px_rgba(0,0,0,0.45)] transition duration-300 hover:z-10 hover:rotate-0 hover:-translate-y-1 hover:border-white/[0.14] sm:p-10 ${cardMotion[i % cardMotion.length]}`}
-            >
-              <p className="text-lg font-semibold tracking-[-0.02em] text-fg">{item.name}</p>
-              <p className="mt-1 text-sm text-white/35">{item.title}</p>
-              <p className="mt-5 text-base leading-relaxed text-white/55">{item.quote}</p>
+            <Reveal key={item.name} as="blockquote" delay={i * 0.05} className="group relative">
+              <span
+                aria-hidden="true"
+                className="absolute -top-8 left-0 text-7xl leading-none font-semibold text-white/10 transition-colors duration-500 group-hover:text-white/25 select-none"
+              >
+                “
+              </span>
+              <p className="relative text-lg leading-relaxed text-muted">{item.quote}</p>
+              <footer className="mt-6">
+                <cite className="not-italic">
+                  <span className="block font-medium text-fg">{item.name}</span>
+                  <span className="mt-1 block text-sm text-faint">{item.title}</span>
+                </cite>
+              </footer>
             </Reveal>
           ))}
         </div>

@@ -9,4 +9,8 @@ export const site = {
   founder: "Basma Kaanane",
   /** Calendly booking page for free discovery calls. */
   calendar: "https://calendly.com/hi-laverageai/discovery-call",
+  /** Public legal status. Replace with the registered entity name when you have it. */
+  legalName: "LaverageAI",
+  incorporated: true,
+  policiesUpdated: "15 November 2026",
 } as const;

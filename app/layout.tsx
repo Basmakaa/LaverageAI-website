@@ -63,7 +63,7 @@ export const viewport: Viewport = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: site.name,
+  name: site.legalName,
   url: site.url,
   logo: `${site.url}/logo.png`,
   description: site.description,
@@ -73,6 +73,11 @@ const organizationSchema = {
     "@type": "Person",
     name: site.founder,
     jobTitle: "Founder",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: site.email,
+    contactType: "customer service",
   },
   areaServed: "Worldwide",
   knowsAbout: [
@@ -89,7 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body id="top" className="bg-ink text-fg antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-lg focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
         >
           Skip to content
         </a>
