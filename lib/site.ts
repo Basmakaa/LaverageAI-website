@@ -1,9 +1,9 @@
 export const site = {
   name: "LaverageAI",
-  url: "https://laverageai.com",
-  title: "LaverageAI | Helping Businesses Leverage AI",
+  url: "https://www.laverageai.com",
+  title: "AI Workshops and Training for Small Businesses | LaverageAI",
   description:
-    "Helping small businesses confidently adopt AI through workshops, implementation and AI strategy.",
+    "Hands-on AI workshops, Claude training, and implementation for small and medium businesses. Book a free discovery call with an approved Anthropic SMB trainer.",
   tagline: "Helping businesses leverage AI with confidence.",
   email: "hi@laverageai.com",
   founder: "Basma Kaanane",

@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organizationGraph } from "@/lib/schema";
 import { site } from "@/lib/site";
 
 import "./globals.css";
@@ -35,18 +37,36 @@ export const metadata: Metadata = {
   authors: [{ name: site.founder }],
   creator: site.founder,
   alternates: { canonical: "/" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
     type: "website",
     url: site.url,
     siteName: site.name,
     title: site.title,
     description: site.description,
-    locale: "en_US",
+    locale: "en_CA",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: site.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
+    images: ["/og.png"],
   },
   robots: {
     index: true,
@@ -60,37 +80,12 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: site.legalName,
-  url: site.url,
-  logo: `${site.url}/logo.png`,
-  description: site.description,
-  slogan: site.tagline,
-  email: site.email,
-  founder: {
-    "@type": "Person",
-    name: site.founder,
-    jobTitle: "Founder",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    email: site.email,
-    contactType: "customer service",
-  },
-  areaServed: "Worldwide",
-  knowsAbout: [
-    "Artificial intelligence adoption",
-    "AI workshops and training",
-    "Workflow automation",
-    "AI strategy",
-  ],
-};
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en-CA" className={inter.variable}>
+      <head>
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+      </head>
       <body id="top" className="bg-ink text-fg antialiased">
         <a
           href="#main"
@@ -101,10 +96,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
+        <JsonLd data={organizationGraph} />
       </body>
     </html>
   );

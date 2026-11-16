@@ -1,0 +1,33 @@
+# LaverageAI
+
+> Practical AI workshops, training, and implementation for small and medium businesses.
+
+LaverageAI helps teams without a technical background adopt AI through hands-on workshops, workflow implementation, and AI strategy. Sessions are built around the work the team already does, not generic prompting theory.
+
+Founder: Basma Kaanane, approved Anthropic SMB trainer.
+
+## What we do
+
+- AI readiness assessment
+- AI workshops for non-technical teams
+- Claude and ChatGPT training
+- Workflow automation
+- Custom AI assistants
+- AI strategy
+- Implementation
+- Ongoing advisory
+
+## Who it is for
+
+Small and medium businesses, founders, and teams that want AI to save time on real work. No prior AI experience is required.
+
+## Pages
+
+- [Home](https://www.laverageai.com/): services, process, workshops, feedback, contact, FAQ
+- [Privacy](https://www.laverageai.com/privacy)
+- [Terms](https://www.laverageai.com/terms)
+
+## Contact
+
+- Email: hi@laverageai.com
+- Book a free discovery call: https://calendly.com/hi-laverageai/discovery-call

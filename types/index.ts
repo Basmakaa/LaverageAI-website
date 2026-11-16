@@ -38,6 +38,7 @@ export type Workshop = {
 export type GalleryPhoto = {
   src: string;
   alt: string;
+  objectPosition?: string;
 };
 
 export type FaqItem = {

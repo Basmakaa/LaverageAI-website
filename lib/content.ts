@@ -118,13 +118,37 @@ export const workshops: Workshop[] = [
 
 export const workshopPhotos: GalleryPhoto[] = [
   { src: "/gallery/workshop-01.jpg", alt: "Workshop Q and A with attendees and laptops in the room" },
-  { src: "/gallery/workshop-02.jpg", alt: "Basma speaking to the room during a LaverageAI workshop" },
-  { src: "/gallery/workshop-03.jpg", alt: "Attendees working through AI workflows on laptops" },
+  {
+    src: "/gallery/workshop-10.jpg",
+    alt: "Attendees watching a session on Anthropic's AI Fluency Framework",
+    objectPosition: "center 40%",
+  },
   { src: "/gallery/workshop-04.jpg", alt: "Participants reviewing work together on a laptop" },
-  { src: "/gallery/workshop-05.jpg", alt: "The Founders Guide to AI session with Femme in Business" },
-  { src: "/gallery/workshop-06.jpg", alt: "Hands on guidance during a workshop exercise" },
+  {
+    src: "/gallery/workshop-12.jpg",
+    alt: "Basma teaching AI Fluency for Small and Medium Business Leaders",
+    objectPosition: "18% center",
+  },
+  { src: "/gallery/workshop-02.jpg", alt: "Basma speaking to the room during a LaverageAI workshop" },
   { src: "/gallery/workshop-07.jpg", alt: "Attendees following along on laptops and tablets" },
+  {
+    src: "/gallery/workshop-13.jpg",
+    alt: "Basma asking the room which task they would hand off first",
+  },
+  { src: "/gallery/workshop-03.jpg", alt: "Attendees working through AI workflows on laptops" },
+  {
+    src: "/gallery/workshop-11.jpg",
+    alt: "Basma presenting in front of a slide about putting AI to work",
+    objectPosition: "78% center",
+  },
+  { src: "/gallery/workshop-05.jpg", alt: "The Founders Guide to AI session with Femme in Business" },
   { src: "/gallery/workshop-08.jpg", alt: "Basma coaching a participant during a live session" },
+  {
+    src: "/gallery/workshop-14.jpg",
+    alt: "Basma at the LaverageAI x Anthropic Claude Cowork workshop",
+    objectPosition: "center 20%",
+  },
+  { src: "/gallery/workshop-06.jpg", alt: "Hands on guidance during a workshop exercise" },
   {
     src: "/gallery/workshop-09.jpg",
     alt: "Attendees clapping and smiling during a LaverageAI workshop",

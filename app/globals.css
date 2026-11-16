@@ -67,12 +67,118 @@
   background-size: 100% 1px;
 }
 
-.service-slider {
-  scrollbar-width: none;
+@property --service-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
-.service-slider::-webkit-scrollbar {
+.service-track {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  cursor: grab;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(1.5rem, calc((100% - 80rem) / 2 + 1.5rem));
+  padding-block: 1.5rem;
+  padding-inline: max(1.5rem, calc((100% - 80rem) / 2 + 1.5rem));
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.service-track:focus-visible {
+  outline: none;
+}
+
+.service-track::-webkit-scrollbar {
   display: none;
+}
+
+.service-card {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 min(82vw, 28.5rem);
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  border-radius: 1.15rem;
+  padding: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.92);
+  opacity: 0.42;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 0.75, 0.2, 1),
+    opacity 0.45s ease;
+}
+
+.service-card.is-active {
+  transform: scale(1);
+  opacity: 1;
+  background: conic-gradient(
+    from var(--service-angle),
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.92) 8%,
+    rgba(255, 255, 255, 0.12) 22%,
+    rgba(255, 255, 255, 0.08) 40%
+  );
+  animation: service-border-spin 4.5s linear infinite;
+}
+
+.service-card-inner {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 19.5rem;
+  border-radius: calc(1.15rem - 1px);
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.07), transparent 46%),
+    #070707;
+  padding: 2rem 1.75rem 2.15rem;
+}
+
+@media (min-width: 640px) {
+  .service-card-inner {
+    min-height: 21rem;
+    padding: 2.4rem 2.15rem 2.5rem;
+  }
+}
+
+.service-card-inner::before,
+.service-card-inner::after {
+  content: "";
+  position: absolute;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+  transition: border-color 0.35s ease;
+}
+
+.service-card-inner::before {
+  top: 0.85rem;
+  left: 0.85rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.service-card-inner::after {
+  right: 0.85rem;
+  bottom: 0.85rem;
+  border-top: 0;
+  border-left: 0;
+}
+
+.service-card.is-active .service-card-inner::before,
+.service-card.is-active .service-card-inner::after {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes service-border-spin {
+  to {
+    --service-angle: 360deg;
+  }
 }
 
 /* Mobile hero wave only. Period is 1760 user units in a 1600 viewBox, so the

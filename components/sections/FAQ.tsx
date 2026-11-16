@@ -44,16 +44,15 @@ export function FAQ() {
                   </span>
                 </button>
               </h3>
-              {isOpen ? (
-                <p
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  className="max-w-3xl pb-7 text-base leading-relaxed text-muted"
-                >
-                  {faq.answer}
-                </p>
-              ) : null}
+              <p
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                hidden={!isOpen}
+                className="max-w-3xl pb-7 text-base leading-relaxed text-muted"
+              >
+                {faq.answer}
+              </p>
             </div>
           );
         })}

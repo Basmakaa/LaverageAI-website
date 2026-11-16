@@ -2,8 +2,9 @@
 
 import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
+import { ArrowButton } from "@/components/ui/ArrowButton";
 import type { GalleryPhoto } from "@/types";
 
 const DESKTOP_VISIBLE = 3;
@@ -141,6 +142,11 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
                       sizes="(min-width: 768px) 33vw, 92vw"
                       draggable={false}
                       className="aspect-[3/4] h-full w-full object-cover transition duration-700 ease-out group-hover/photo:scale-[1.04]"
+                      style={
+                        photo.objectPosition
+                          ? { objectPosition: photo.objectPosition }
+                          : undefined
+                      }
                     />
                   </figure>
                 ))}
@@ -151,33 +157,30 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
 
         {pageCount > 1 ? (
           <>
-            <CarouselButton
+            <ArrowButton
+              direction="prev"
               label="Previous photos"
               onClick={() => goTo(page - 1)}
-              className="absolute top-1/2 left-3 z-10 -translate-y-1/2 max-md:hidden"
-            >
-              Prev
-            </CarouselButton>
-            <CarouselButton
+              className="absolute top-1/2 left-2 z-10 -translate-y-1/2 text-white/70 hover:text-white max-md:hidden"
+            />
+            <ArrowButton
+              direction="next"
               label="Next photos"
               onClick={() => goTo(page + 1)}
-              className="absolute top-1/2 right-3 z-10 -translate-y-1/2 max-md:hidden"
-            >
-              Next
-            </CarouselButton>
+              className="absolute top-1/2 right-2 z-10 -translate-y-1/2 text-white/70 hover:text-white max-md:hidden"
+            />
           </>
         ) : null}
       </div>
 
       {pageCount > 1 ? (
         <div className="mt-6 flex items-center justify-center gap-4">
-          <CarouselButton
+          <ArrowButton
+            direction="prev"
             label="Previous photos"
             onClick={() => goTo(page - 1)}
             className="md:hidden"
-          >
-            Prev
-          </CarouselButton>
+          />
 
           <div className="flex items-center gap-2" role="tablist" aria-label="Gallery pages">
             {pages.map((_, i) => {
@@ -198,13 +201,12 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
             })}
           </div>
 
-          <CarouselButton
+          <ArrowButton
+            direction="next"
             label="Next photos"
             onClick={() => goTo(page + 1)}
             className="md:hidden"
-          >
-            Next
-          </CarouselButton>
+          />
         </div>
       ) : null}
 
@@ -216,25 +218,3 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
   );
 }
 
-function CarouselButton({
-  label,
-  onClick,
-  className,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className={`inline-flex h-11 items-center justify-center border border-line bg-ink px-3 text-sm text-fg hover:border-line-strong ${className ?? ""}`}
-    >
-      {children}
-    </button>
-  );
-}
