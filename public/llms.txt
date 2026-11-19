@@ -24,6 +24,7 @@ Small and medium businesses, founders, and teams that want AI to save time on re
 ## Pages
 
 - [Home](https://www.laverageai.com/): services, process, workshops, feedback, contact, FAQ
+- [Turn Claude into your reel editor](https://www.laverageai.com/claude-editor-instructions): beginner guide to editing vertical reels with Claude Code and free local tools
 - [Privacy](https://www.laverageai.com/privacy)
 - [Terms](https://www.laverageai.com/terms)
 

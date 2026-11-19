@@ -9,6 +9,7 @@
   --color-fg: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.65);
   --color-faint: rgba(255, 255, 255, 0.42);
+  --color-claude: #d97757;
 
   --font-sans: var(--font-inter), ui-sans-serif, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -249,9 +250,19 @@
   margin-top: 0.4rem;
 }
 
-.legal-body a {
+.legal-body a,
+.guide-link {
   text-decoration: underline;
   text-underline-offset: 0.18em;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+
+.guide-link:hover {
+  text-decoration-color: #ffffff;
+}
+
+.guide-link.text-claude {
+  text-decoration-color: var(--color-claude);
 }
 
 /* Keep the Calendly iframe from painting an opaque white canvas on this dark page. */

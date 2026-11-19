@@ -10,6 +10,7 @@ export const navLinks: NavLink[] = [
 ];
 
 export const legalLinks: NavLink[] = [
+  { label: "Reel editor", href: "/claude-editor-instructions" },
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
 ];
